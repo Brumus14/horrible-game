@@ -66,11 +66,9 @@ public class Player {
         // speed increase if shift
         if (arena.shiftPressed()) {
             speed = origSpeed * 2;
-        }
-        else{
+        } else {
             speed = origSpeed;
         }
-
 
         // position movement
         if (arena.letterPressed('w')) {
@@ -101,10 +99,10 @@ public class Player {
             rotate(rotationSpeed);
         }
 
-
         // rotation
-        rotate((MouseInfo.getPointerInfo().getLocation().getX() - (screenWidth/2)) * mouseRotateSpeed);
-
+        rotate((MouseInfo.getPointerInfo().getLocation().getX() -
+                (screenWidth / 2)) *
+               mouseRotateSpeed);
 
         while (rotation < 0) {
             rotation += 2 * Math.PI;

@@ -18,15 +18,17 @@ public class Game {
                                 {1, 1, 1, 1, 1,}});
          */
 
-        GameMap map = new GameMap(24,24);
+        GameMap map = new GameMap(24, 24);
         Generator g = new Generator();
         g.randomise();
         g.createPath();
         g.load(map);
-        CursorManager c = new CursorManager(arena.getPanel(), screenWidth/2, screenHeight/2);
+        CursorManager c = new CursorManager(arena.getPanel(), screenWidth / 2,
+                                            screenHeight / 2);
         c.toggleCursor();
 
-        Player player = new Player(12.5, 1.5, 0.66, 0.66, 0.03, 0.03, screenWidth);
+        Player player =
+            new Player(12.5, 1.5, 0.66, 0.66, 0.03, 0.03, screenWidth);
 
         Raycaster raycaster = new Raycaster(arena, 480);
 
@@ -35,27 +37,27 @@ public class Game {
         boolean paused = false;
         boolean escHeld = false;
         while (!arena.letterPressed('p')) {
-            if(arena.escPressed() && !escHeld){
+            if (arena.escPressed() && !escHeld) {
                 c.Update();
                 c.toggleCursor();
                 paused = !paused;
             }
-            if(arena.escPressed()){
+            if (arena.escPressed()) {
                 escHeld = true;
-            }
-            else{
+            } else {
                 escHeld = false;
             }
 
             arena.pause();
-            if(!paused){
+            if (!paused) {
                 player.HandleMovement(arena);
                 enemy.Update();
                 raycaster.raycast(map, player);
                 c.Update();
             }
         }
-        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(arena.getPanel());
+        JFrame frame =
+            (JFrame)SwingUtilities.getWindowAncestor(arena.getPanel());
         frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
     }
 }

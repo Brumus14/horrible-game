@@ -15,35 +15,35 @@ public class CursorManager {
         this.posX = posX;
         this.posY = posY;
         this.panel = panel;
-        frame = ((JFrame) SwingUtilities.getWindowAncestor(panel));
+        frame = ((JFrame)SwingUtilities.getWindowAncestor(panel));
 
-        try{
+        try {
             r = new Robot();
-        }
-        catch(AWTException e){
+        } catch (AWTException e) {
             System.out.println("Error creating robot");
         }
 
-        visibleCursor = ((JFrame) SwingUtilities.getWindowAncestor(panel)).getContentPane().getCursor();
+        visibleCursor = ((JFrame)SwingUtilities.getWindowAncestor(panel))
+                            .getContentPane()
+                            .getCursor();
 
-        BufferedImage hiddenImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+        BufferedImage hiddenImg =
+            new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
         hiddenCursor = Toolkit.getDefaultToolkit().createCustomCursor(
-                hiddenImg, new Point(0, 0), "blank cursor");
+            hiddenImg, new Point(0, 0), "blank cursor");
     }
 
-    public void Update(){
+    public void Update() {
         r.mouseMove(posX, posY);
     }
 
-    public void toggleCursor(){
-        if(visible){
+    public void toggleCursor() {
+        if (visible) {
             frame.getContentPane().setCursor(hiddenCursor);
             visible = false;
-        }
-        else{
+        } else {
             frame.getContentPane().setCursor(visibleCursor);
             visible = true;
         }
-
     }
 }
