@@ -9,7 +9,6 @@ public class Player {
     private double speed;
     private double origSpeed;
     private double rotationSpeed;
-    private double oldMousePosition;
     private double mouseRotateSpeed = 0.0005;
     private int screenWidth;
 
@@ -100,9 +99,7 @@ public class Player {
         }
 
         // rotation
-        rotate((MouseInfo.getPointerInfo().getLocation().getX() -
-                (screenWidth / 2)) *
-               mouseRotateSpeed);
+        rotate((int)(MouseInfo.getPointerInfo().getLocation().getX() - (screenWidth / 2)) * mouseRotateSpeed);
 
         while (rotation < 0) {
             rotation += 2 * Math.PI;
@@ -114,7 +111,5 @@ public class Player {
 
         planeX = 0.66 * Math.cos(rotation);
         planeY = 0.66 * -Math.sin(rotation);
-
-        oldMousePosition = arena.getMousePositionX();
     }
 }

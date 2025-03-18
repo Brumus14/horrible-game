@@ -28,7 +28,7 @@ public class Game {
         c.toggleCursor();
 
         Player player =
-            new Player(12.5, 1.5, 0.66, 0.66, 0.03, 0.03, screenWidth);
+            new Player(12.5, 1.5, 0.66, 0.03, 0.03, screenWidth);
 
         Raycaster raycaster = new Raycaster(arena, 480);
 
