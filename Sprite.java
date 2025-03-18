@@ -27,15 +27,7 @@ public class Sprite {
         shape.setWidth(width / distance);
         shape.setHeight(height / distance);
 
-        double angle =
-            (deltaX * player.getDirectionX() + deltaY * player.getPositionY()) /
-            (Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2)) *
-             Math.sqrt(Math.pow(player.getDirectionX(), 2) +
-                       Math.pow(player.getDirectionY(), 2)));
-
-        double x = Math.tan(angle);
-
-        shape.setXPosition(x);
-        shape.setYPosition(arena.getHeight() / 2);
+        // shape.setXPosition(x);
+        // shape.setYPosition(arena.getHeight() / 2);
     }
 }

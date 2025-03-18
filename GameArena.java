@@ -77,8 +77,13 @@ public class GameArena extends JPanel
             this.frame = new JFrame();
 
             // modifications - begin
+<<<<<<< Updated upstream
             frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
             frame.setUndecorated(true);
+=======
+            // frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            // frame.setUndecorated(true);
+>>>>>>> Stashed changes
             //  modifications - end
 
             frame.setTitle("Let's Play!");

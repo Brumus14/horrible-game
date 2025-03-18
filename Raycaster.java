@@ -16,6 +16,7 @@ public class Raycaster {
         }
     }
 
+    // y is flipped
     public void raycast(GameMap map, Player player) {
         for (int x = 0; x < lineCount; x++) {
             double cameraX = 2.0 * x / lineCount - 1;

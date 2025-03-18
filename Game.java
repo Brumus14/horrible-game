@@ -10,13 +10,14 @@ public class Game {
 
         GameArena arena = new GameArena(screenWidth, screenHeight);
 
-        /*GameMap map = new GameMap(5, 5);
-        map.SetMap(new int[][] {{1, 1, 1, 1, 1},
-                                {1, 0, 0, 1, 1},
-                                {1, 1, 0, 1, 1},
-                                {1, 0, 0, 0, 1},
-                                {1, 1, 1, 1, 1,}});
-         */
+        // GameMap map = new GameMap(5, 5);
+        // map.SetMap(new int[][] {
+        //     {1, 1, 1, 1, 1},
+        //     {1, 0, 0, 1, 1},
+        //     {1, 1, 0, 1, 1},
+        //     {1, 0, 0, 0, 1},
+        //     {1, 1, 1, 1, 1},
+        // });
 
         GameMap map = new GameMap(24, 24);
         Generator g = new Generator();
@@ -27,8 +28,12 @@ public class Game {
                                             screenHeight / 2);
         c.toggleCursor();
 
+<<<<<<< Updated upstream
         Player player =
             new Player(12.5, 1.5, 0.66, 0.03, 0.03, screenWidth);
+=======
+        Player player = new Player(12.5, 1.5, 0.66, 0.02, 0.03, screenWidth);
+>>>>>>> Stashed changes
 
         Raycaster raycaster = new Raycaster(arena, 480);
 
@@ -36,12 +41,14 @@ public class Game {
 
         boolean paused = false;
         boolean escHeld = false;
+
         while (!arena.letterPressed('p')) {
             if (arena.escPressed() && !escHeld) {
                 c.Update();
                 c.toggleCursor();
                 paused = !paused;
             }
+
             if (arena.escPressed()) {
                 escHeld = true;
             } else {
@@ -49,6 +56,7 @@ public class Game {
             }
 
             arena.pause();
+
             if (!paused) {
                 player.HandleMovement(arena);
                 enemy.Update();
@@ -56,6 +64,7 @@ public class Game {
                 c.Update();
             }
         }
+
         JFrame frame =
             (JFrame)SwingUtilities.getWindowAncestor(arena.getPanel());
         frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
