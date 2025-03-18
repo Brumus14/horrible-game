@@ -65,7 +65,7 @@ public class Game {
         g.createPath();
         g.load(map);
         CursorManager c = new CursorManager(arena.getPanel(), 1920/2, 1080/2);
-
+        c.toggleCursor();
 
         Player player = new Player(12.5, 1.5, 0.66, 0.66, 0.03, 0.03);
 
@@ -78,6 +78,7 @@ public class Game {
         while (true) {
             if(arena.escPressed() && !escHeld){
                 c.Update();
+                c.toggleCursor();
                 paused = !paused;
             }
             if(arena.escPressed()){

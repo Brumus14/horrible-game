@@ -5,10 +5,15 @@ import java.awt.image.*;
 public class CursorManager {
     Robot r;
     int posX, posY;
+    Cursor visibleCursor;
+    Cursor hiddenCursor;
+    JPanel panel;
+    Boolean visible = true;
 
     public CursorManager(JPanel panel, int posX, int posY) {
         this.posX = posX;
         this.posY = posY;
+        this.panel = panel;
 
         try{
             r = new Robot();
@@ -17,19 +22,28 @@ public class CursorManager {
             System.out.println("Error creating robot");
         }
 
+        visibleCursor = ((JFrame) SwingUtilities.getWindowAncestor(panel)).getContentPane().getCursor();
 
-        // Transparent 16 x 16 pixel cursor image.
-        BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+        BufferedImage hiddenImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+        hiddenCursor = Toolkit.getDefaultToolkit().createCustomCursor(
+                hiddenImg, new Point(0, 0), "blank cursor");
 
-        // Create a new blank cursor.
-        Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(
-                cursorImg, new Point(0, 0), "blank cursor");
 
-        // Set the blank cursor to the JFrame.
-        ((JFrame) SwingUtilities.getWindowAncestor(panel)).getContentPane().setCursor(blankCursor);
     }
 
     public void Update(){
         r.mouseMove(posX, posY);
+    }
+
+    public void toggleCursor(){
+        if(visible){
+            ((JFrame) SwingUtilities.getWindowAncestor(panel)).getContentPane().setCursor(hiddenCursor);
+            visible = false;
+        }
+        else{
+            ((JFrame) SwingUtilities.getWindowAncestor(panel)).getContentPane().setCursor(visibleCursor);
+            visible = true;
+        }
+
     }
 }
