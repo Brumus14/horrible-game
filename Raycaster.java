@@ -76,6 +76,10 @@ public class Raycaster {
                 }
             }
 
+            if (!hit) {
+                return;
+            }
+
             if (side == 0) {
                 perpWallDist = (sideDistX - deltaDistX);
             } else {

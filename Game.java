@@ -52,14 +52,17 @@ public class Game {
                                 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
                                  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}});
 
-        Player player = new Player(2, 2, 0, 0.66, 0.02, 0.03);
+        Player player = new Player(2, 2, 0, 0.66, 0.03, 0.03);
 
         Raycaster raycaster = new Raycaster(arena, 480);
+
+        Sprite enemy = new Sprite(arena, player, 7, 7, 200, 200, "blue");
 
         while (true) {
             arena.pause();
 
             player.HandleMovement(arena);
+            enemy.Update();
             raycaster.raycast(map, player);
         }
     }
