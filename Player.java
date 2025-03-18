@@ -11,9 +11,10 @@ public class Player {
     private double rotationSpeed;
     private double oldMousePosition;
     private double mouseRotateSpeed = 0.0005;
+    private int screenWidth;
 
     public Player(double posX, double posY, double pX, double pY, double sp,
-                  double rSp) {
+                  double rSp, int screenWidth) {
         positionX = posX;
         positionY = posY;
         rotation = 0;
@@ -22,6 +23,7 @@ public class Player {
         speed = sp;
         origSpeed = sp;
         rotationSpeed = rSp;
+        this.screenWidth = screenWidth;
     }
 
     public double getPositionX() {
@@ -101,7 +103,7 @@ public class Player {
 
 
         // rotation
-        rotate((MouseInfo.getPointerInfo().getLocation().getX() - (1920/2)) * mouseRotateSpeed);
+        rotate((MouseInfo.getPointerInfo().getLocation().getX() - (screenWidth/2)) * mouseRotateSpeed);
 
 
         while (rotation < 0) {

@@ -8,12 +8,14 @@ public class CursorManager {
     Cursor visibleCursor;
     Cursor hiddenCursor;
     JPanel panel;
+    JFrame frame;
     Boolean visible = true;
 
     public CursorManager(JPanel panel, int posX, int posY) {
         this.posX = posX;
         this.posY = posY;
         this.panel = panel;
+        frame = ((JFrame) SwingUtilities.getWindowAncestor(panel));
 
         try{
             r = new Robot();
@@ -27,8 +29,6 @@ public class CursorManager {
         BufferedImage hiddenImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
         hiddenCursor = Toolkit.getDefaultToolkit().createCustomCursor(
                 hiddenImg, new Point(0, 0), "blank cursor");
-
-
     }
 
     public void Update(){
@@ -37,11 +37,11 @@ public class CursorManager {
 
     public void toggleCursor(){
         if(visible){
-            ((JFrame) SwingUtilities.getWindowAncestor(panel)).getContentPane().setCursor(hiddenCursor);
+            frame.getContentPane().setCursor(hiddenCursor);
             visible = false;
         }
         else{
-            ((JFrame) SwingUtilities.getWindowAncestor(panel)).getContentPane().setCursor(visibleCursor);
+            frame.getContentPane().setCursor(visibleCursor);
             visible = true;
         }
 
