@@ -29,28 +29,28 @@ public class Generator {
     public void createPath(){
         int curX = startLocation[0];
         int nextX;
-        area[startLocation[0]][startLocation[1]] = 0;
-        area[startLocation[0]][startLocation[1] + 1] = 0;
+        area[startLocation[1]][startLocation[0]] = 0;
+        area[startLocation[1]][startLocation[0] + 1] = 0;
 
         for(int i = 2; i < mapSize - 1; i += 2){
             nextX = (int)(Math.random() * (mapSize - 2)) + 1;
             for(int j = curX; j != nextX; j += (nextX - curX) / Math.abs(nextX - curX)){
-                area[j][i] = 0;
+                area[i][j] = 0;
             }
-            area[nextX][i] = 0;
-            area[nextX][i + 1] = 0;
+            area[i][nextX] = 0;
+            area[i+1][nextX] = 0;
 
             curX = nextX;
         }
         endLocation[0] = curX;
         endLocation[1] = mapSize - 1;
-        area[curX][mapSize - 1] = 1;
+        area[mapSize - 1][curX] = 1;
     }
 
     public void display(){
         for(int i = 0; i < mapSize; i++){
             for(int j = 0; j < mapSize; j++){
-                System.out.print(area[j][i] + " ");
+                System.out.print(area[i][j] + " ");
             }
             System.out.println();
         }
