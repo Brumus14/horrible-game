@@ -1,6 +1,14 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
 public class Game {
     public static void main(String[] args) {
-        GameArena arena = new GameArena(1920, 1080);
+        Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+        int screenWidth = screen.width;
+        int screenHeight = screen.height;
+
+        GameArena arena = new GameArena(screenWidth, screenHeight);
 
         /*GameMap map = new GameMap(5, 5);
         map.SetMap(new int[][] {{1, 1, 1, 1, 1},
@@ -11,63 +19,14 @@ public class Game {
          */
 
         GameMap map = new GameMap(24,24);
-        map.SetMap(new int[][] {{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-                                 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                                {1, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0,
-                                 0, 0, 0, 3, 0, 3, 0, 3, 0, 0, 0, 1},
-                                {1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 2, 0,
-                                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                                {1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 2, 0,
-                                 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 1},
-                                {1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 2, 0,
-                                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                                {1, 0, 0, 0, 0, 0, 2, 2, 0, 2, 2, 0,
-                                 0, 0, 0, 3, 0, 3, 0, 3, 0, 0, 0, 1},
-                                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                                {1, 4, 4, 4, 4, 4, 4, 4, 4, 0, 0, 0,
-                                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                                {1, 4, 0, 4, 0, 0, 0, 0, 4, 0, 0, 0,
-                                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                                {1, 4, 0, 0, 0, 0, 5, 0, 4, 0, 0, 0,
-                                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                                {1, 4, 0, 4, 0, 0, 0, 0, 4, 0, 0, 0,
-                                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                                {1, 4, 0, 4, 4, 4, 4, 4, 4, 0, 0, 0,
-                                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                                {1, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                                {1, 4, 4, 4, 4, 4, 4, 4, 4, 0, 0, 0,
-                                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-                                 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}});
-
         Generator g = new Generator();
         g.randomise();
         g.createPath();
         g.load(map);
-        CursorManager c = new CursorManager(arena.getPanel(), 1920/2, 1080/2);
+        CursorManager c = new CursorManager(arena.getPanel(), screenWidth/2, screenHeight/2);
         c.toggleCursor();
 
-        Player player = new Player(12.5, 1.5, 0.66, 0.66, 0.03, 0.03);
+        Player player = new Player(12.5, 1.5, 0.66, 0.66, 0.03, 0.03, screenWidth);
 
         Raycaster raycaster = new Raycaster(arena, 480);
 
@@ -75,7 +34,7 @@ public class Game {
 
         boolean paused = false;
         boolean escHeld = false;
-        while (true) {
+        while (!arena.letterPressed('p')) {
             if(arena.escPressed() && !escHeld){
                 c.Update();
                 c.toggleCursor();
@@ -96,5 +55,7 @@ public class Game {
                 c.Update();
             }
         }
+        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(arena.getPanel());
+        frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
     }
 }
