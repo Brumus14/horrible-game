@@ -63,23 +63,37 @@ public class Game {
         Generator g = new Generator();
         g.randomise();
         g.createPath();
-        g.display();
         g.load(map);
+        CursorManager c = new CursorManager(arena.getPanel(), 1920/2, 1080/2);
 
 
-
-        Player player = new Player(12.5, 1.5, 0, 0.66, 0.03, 0.03);
+        Player player = new Player(12.5, 1.5, 0.66, 0.66, 0.03, 0.03);
 
         Raycaster raycaster = new Raycaster(arena, 480);
 
         Sprite enemy = new Sprite(arena, player, 7, 7, 200, 200, "blue");
 
+        boolean paused = false;
+        boolean escHeld = false;
         while (true) {
-            arena.pause();
+            if(arena.escPressed() && !escHeld){
+                c.Update();
+                paused = !paused;
+            }
+            if(arena.escPressed()){
+                escHeld = true;
+            }
+            else{
+                escHeld = false;
+            }
 
-            player.HandleMovement(arena);
-            enemy.Update();
-            raycaster.raycast(map, player);
+            arena.pause();
+            if(!paused){
+                player.HandleMovement(arena);
+                enemy.Update();
+                raycaster.raycast(map, player);
+                c.Update();
+            }
         }
     }
 }

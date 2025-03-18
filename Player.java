@@ -1,3 +1,5 @@
+import java.awt.*;
+
 public class Player {
     private double positionX;
     private double positionY;
@@ -5,7 +7,10 @@ public class Player {
     private double planeX;
     private double planeY;
     private double speed;
+    private double origSpeed;
     private double rotationSpeed;
+    private double oldMousePosition;
+    private double mouseRotateSpeed = 0.0005;
 
     public Player(double posX, double posY, double pX, double pY, double sp,
                   double rSp) {
@@ -15,6 +20,7 @@ public class Player {
         planeX = pX;
         planeY = pY;
         speed = sp;
+        origSpeed = sp;
         rotationSpeed = rSp;
     }
 
@@ -55,6 +61,16 @@ public class Player {
     }
 
     public void HandleMovement(GameArena arena) {
+        // speed increase if shift
+        if (arena.shiftPressed()) {
+            speed = origSpeed * 2;
+        }
+        else{
+            speed = origSpeed;
+        }
+
+
+        // position movement
         if (arena.letterPressed('w')) {
             positionX += Math.sin(rotation) * speed;
             positionY += Math.cos(rotation) * speed;
@@ -83,6 +99,11 @@ public class Player {
             rotate(rotationSpeed);
         }
 
+
+        // rotation
+        rotate((MouseInfo.getPointerInfo().getLocation().getX() - (1920/2)) * mouseRotateSpeed);
+
+
         while (rotation < 0) {
             rotation += 2 * Math.PI;
         }
@@ -93,5 +114,7 @@ public class Player {
 
         planeX = 0.66 * Math.cos(rotation);
         planeY = 0.66 * -Math.sin(rotation);
+
+        oldMousePosition = arena.getMousePositionX();
     }
 }
