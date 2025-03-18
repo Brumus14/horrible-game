@@ -13,13 +13,13 @@ public class Player {
     private double mouseRotateSpeed = 0.0005;
     private int screenWidth;
 
-    public Player(double posX, double posY, double pX, double pY, double sp,
-                  double rSp, int screenWidth) {
+    public Player(double posX, double posY, double plane, double sp, double rSp,
+                  int screenWidth) {
         positionX = posX;
         positionY = posY;
         rotation = 0;
-        planeX = pX;
-        planeY = pY;
+        planeX = plane;
+        planeY = 0;
         speed = sp;
         origSpeed = sp;
         rotationSpeed = rSp;
