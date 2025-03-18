@@ -52,7 +52,13 @@ public class Game {
                                 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
                                  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}});
 
-        Player player = new Player(2, 2, 0, 0.66, 0.03, 0.03);
+        Generator g = new Generator();
+        g.randomise();
+        g.createPath();
+        g.display();
+        g.load(map);
+
+        Player player = new Player(1, 12, 0, 0.66, 0.03, 0.03);
 
         Raycaster raycaster = new Raycaster(arena, 480);
 
