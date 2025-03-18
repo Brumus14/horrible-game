@@ -20,15 +20,20 @@ public class Sprite {
     }
 
     public void Update() {
-        double distance =
-            Math.sqrt(Math.pow(player.getPositionX() - positionX, 2) +
-                      Math.pow(player.getPositionY() - positionY, 2));
+        double deltaX = player.getPositionX() - positionX;
+        double deltaY = player.getPositionY() - positionY;
+
+        double distance = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
         shape.setWidth(width / distance);
         shape.setHeight(height / distance);
 
-        double x = Math.sin(Math.atan2(positionY - player.getPositionY(),
-                                       positionX - player.getPositionX())) *
-                   distance;
+        double angle =
+            (deltaX * player.getDirectionX() + deltaY * player.getPositionY()) /
+            (Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2)) *
+             Math.sqrt(Math.pow(player.getDirectionX(), 2) +
+                       Math.pow(player.getDirectionY(), 2)));
+
+        double x = Math.tan(angle);
 
         shape.setXPosition(x);
         shape.setYPosition(arena.getHeight() / 2);
