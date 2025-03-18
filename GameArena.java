@@ -75,6 +75,12 @@ public class GameArena extends JPanel
     private void init(int width, int height, boolean createWindow) {
         if (createWindow) {
             this.frame = new JFrame();
+
+			//modifications - begin
+			frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+			frame.setUndecorated(true);
+			// modifications - end
+
             frame.setTitle("Let's Play!");
             frame.setSize(width, height);
             frame.setResizable(false);
