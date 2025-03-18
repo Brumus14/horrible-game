@@ -20,7 +20,7 @@ public class Generator {
                     area[i][j] = 1;
                 }
                 else{
-                    area[i][j] = (int) (Math.random() * 1) == 0 ? 1 : 0;
+                    area[i][j] = (int) (Math.random() * 1.5) == 0 ? 1 : 0;
                 }
             }
         }
@@ -30,7 +30,7 @@ public class Generator {
         int curX = startLocation[0];
         int nextX;
         area[startLocation[1]][startLocation[0]] = 0;
-        area[startLocation[1]][startLocation[0] + 1] = 0;
+        area[startLocation[1] + 1][startLocation[0]] = 0;
 
         for(int i = 2; i < mapSize - 1; i += 2){
             nextX = (int)(Math.random() * (mapSize - 2)) + 1;
@@ -43,8 +43,9 @@ public class Generator {
             curX = nextX;
         }
         endLocation[0] = curX;
-        endLocation[1] = mapSize - 1;
-        area[mapSize - 1][curX] = 1;
+        endLocation[1] = mapSize - 2;
+        area[endLocation[1]][endLocation[0]] = 2;
+        area[endLocation[1] + 1][endLocation[0]] = 1;
     }
 
     public void display(){

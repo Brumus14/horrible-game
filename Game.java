@@ -2,7 +2,15 @@ public class Game {
     public static void main(String[] args) {
         GameArena arena = new GameArena(1920, 1080);
 
-        GameMap map = new GameMap(24, 24);
+        /*GameMap map = new GameMap(5, 5);
+        map.SetMap(new int[][] {{1, 1, 1, 1, 1},
+                                {1, 0, 0, 1, 1},
+                                {1, 1, 0, 1, 1},
+                                {1, 0, 0, 0, 1},
+                                {1, 1, 1, 1, 1,}});
+         */
+
+        GameMap map = new GameMap(24,24);
         map.SetMap(new int[][] {{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
                                  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
                                 {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -58,7 +66,9 @@ public class Game {
         g.display();
         g.load(map);
 
-        Player player = new Player(1, 12, 0, 0.66, 0.03, 0.03);
+
+
+        Player player = new Player(12.5, 1.5, 0, 0.66, 0.03, 0.03);
 
         Raycaster raycaster = new Raycaster(arena, 480);
 
