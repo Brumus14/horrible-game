@@ -28,12 +28,7 @@ public class Game {
                                             screenHeight / 2);
         c.toggleCursor();
 
-<<<<<<< Updated upstream
-        Player player =
-            new Player(12.5, 1.5, 0.66, 0.03, 0.03, screenWidth);
-=======
         Player player = new Player(12.5, 1.5, 0.66, 0.02, 0.03, screenWidth);
->>>>>>> Stashed changes
 
         Raycaster raycaster = new Raycaster(arena, 480);
 
