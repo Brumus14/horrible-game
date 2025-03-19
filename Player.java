@@ -12,7 +12,7 @@ public class Player {
     private double rotationSpeed;
     private double mouseRotateSpeed = 0.0005;
     private double centreX;
-    public boolean makingNoise = false;
+    public boolean moving = false;
     public boolean crouched = false;
     public boolean sprinting = false;
     private Generator gen;
@@ -33,7 +33,6 @@ public class Player {
         speed = sp;
         origSpeed = sp;
         rotationSpeed = rSp;
-        centreX = screenWidth / 2;
         gen = g;
         raycaster = r;
         cursor = c;
@@ -174,9 +173,9 @@ public class Player {
         if ((arena.letterPressed('w') || arena.letterPressed('a') ||
              arena.letterPressed('d') || arena.letterPressed('s')) &&
             !crouched) {
-            makingNoise = true;
+            moving = true;
         } else {
-            makingNoise = false;
+            moving = false;
         }
 
         if (arena.letterPressed('m')) {
