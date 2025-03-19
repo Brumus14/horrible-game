@@ -55,7 +55,7 @@ public class Background {
     }
 
     public void update() {
-        System.out.println(raycaster.getLineOffsetY());
+        //System.out.println(raycaster.getLineOffsetY());
         for (int i = 0; i < lines.length; i++) {
             lines[i].setYPosition(i * height + raycaster.getLineOffsetY());
         }

@@ -333,6 +333,6 @@ public class Enemy {
             suffix = "0" + suffix;
         }
         heartbeat.setColour("%ff0000" + suffix);
-        System.out.println(heartTimer + " " + suffix);
+        //System.out.println(heartTimer + " " + suffix);
     }
 }
