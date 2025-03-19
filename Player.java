@@ -6,6 +6,7 @@ public class Player {
     private double rotation;
     private double planeX;
     private double planeY;
+    private double initialPlane;
     private double speed;
     private double origSpeed;
     private double rotationSpeed;
@@ -18,20 +19,23 @@ public class Player {
     private boolean mouseRotation = true;
     private boolean mouseHeld;
     private Raycaster raycaster;
+    private CursorManager cursor;
 
     public Player(double posX, double posY, double plane, double sp, double rSp,
-                  int screenWidth, Generator g, Raycaster r) {
+                  int screenWidth, Generator g, Raycaster r, CursorManager c) {
         positionX = posX;
         positionY = posY;
         rotation = 0;
         planeX = plane;
         planeY = 0;
+        initialPlane = plane;
         speed = sp;
         origSpeed = sp;
         rotationSpeed = rSp;
         centreX = screenWidth / 2;
         gen = g;
         raycaster = r;
+        cursor = c;
     }
 
     public double getPositionX() {
@@ -86,7 +90,7 @@ public class Player {
 
             double offset = raycaster.getLineOffsetY();
 
-            if (offset > -500) {
+            if (offset > -300) {
                 raycaster.setLineOffsetY(offset - 40);
             }
         } else {
@@ -148,8 +152,7 @@ public class Player {
 
         // rotation
         if (mouseRotation) {
-            rotate((int)(MouseInfo.getPointerInfo().getLocation().getX() -
-                         centreX) *
+            rotate((cursor.getX() - (cursor.getWidth() / 2)) *
                    mouseRotateSpeed);
         }
 
@@ -161,8 +164,8 @@ public class Player {
             rotation -= 2 * Math.PI;
         }
 
-        planeX = 0.66 * Math.cos(rotation);
-        planeY = 0.66 * -Math.sin(rotation);
+        planeX = initialPlane * Math.cos(rotation);
+        planeY = initialPlane * -Math.sin(rotation);
 
         if ((arena.letterPressed('w') || arena.letterPressed('a') ||
              arena.letterPressed('d') || arena.letterPressed('s')) &&
@@ -179,10 +182,6 @@ public class Player {
             mouseHeld = true;
         } else {
             mouseHeld = false;
-        }
-
-        if (arena.letterPressed('r')) {
-            centreX = MouseInfo.getPointerInfo().getLocation().getX();
         }
     }
 }

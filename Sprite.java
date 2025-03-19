@@ -7,9 +7,10 @@ public class Sprite {
     private double height;
     private double depth;
     private Player player;
+    private Raycaster raycaster;
 
     public Sprite(GameArena a, Player p, double x, double y, double w, double h,
-                  String colour) {
+                  String colour, Raycaster r) {
         arena = a;
         player = p;
         positionX = x;
@@ -18,6 +19,7 @@ public class Sprite {
         height = h;
         shape = new Rectangle(0, 0, 0, 0, colour);
         arena.addRectangle(shape);
+        raycaster = r;
     }
 
     public double getDepth() {
@@ -77,7 +79,7 @@ public class Sprite {
             shape.setXPosition(spriteScreenX);
         }
 
-        shape.setYPosition(arena.getHeight() / 2);
+        shape.setYPosition(arena.getHeight() / 2 + raycaster.getLineOffsetY());
 
         depth = distance;
         shape.setDepth(distance);

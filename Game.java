@@ -4,11 +4,13 @@ import java.awt.event.*;
 
 public class Game {
     public static void main(String[] args) {
-        //Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-        //int screenWidth = screen.width;
-        //int screenHeight = screen.height;
+        // Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+        // int screenWidth = screen.width;
+        // int screenHeight = screen.height;
 
-        GraphicsDevice graphics = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+        GraphicsDevice graphics =
+            GraphicsEnvironment.getLocalGraphicsEnvironment()
+                .getDefaultScreenDevice();
         int screenWidth = graphics.getDisplayMode().getWidth();
         int screenHeight = graphics.getDisplayMode().getHeight();
 
@@ -34,22 +36,15 @@ public class Game {
 
         Raycaster raycaster = new Raycaster(arena, 480);
 
-        Player player =
-            new Player(12.5, 1.5, 0.66, 0.02, 0.03, screenWidth, g, raycaster);
-        Enemy jack = new Enemy(arena, g, player);
-
-        // Sprite enemy = new Sprite(arena, player, 12.5, 1.5, 200, 200,
-        // "blue");
+        // plane of 10 for drunk
+        Player player = new Player(12.5, 1.5, 0.66, 0.02, 0.03, screenWidth, g,
+                                   raycaster, c);
+        Enemy jack = new Enemy(arena, g, player, raycaster);
 
         boolean paused = false;
         boolean escHeld = false;
 
-        // Renderer renderer =
-        //     new Renderer(arena, new Sprite[] {enemy}, raycaster.getLines(),
-        //                  raycaster.getLineDepths());
-
         while (!arena.letterPressed('p')) {
-            // enemy.move(0.001, 0);
             if (arena.escPressed() && !escHeld) {
                 c.Update();
                 c.toggleCursor();

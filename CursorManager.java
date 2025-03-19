@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.*;
 
 public class CursorManager {
@@ -10,6 +12,7 @@ public class CursorManager {
     JPanel panel;
     JFrame frame;
     Boolean visible = true;
+    GraphicsDevice previousDevice;
 
     public CursorManager(JPanel panel, int posX, int posY) {
         this.posX = posX;
@@ -17,11 +20,9 @@ public class CursorManager {
         this.panel = panel;
         frame = ((JFrame)SwingUtilities.getWindowAncestor(panel));
 
-        try {
-            r = new Robot(GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice());
-        } catch (AWTException e) {
-            System.out.println("Error creating robot");
-        }
+        previousDevice = frame.getGraphicsConfiguration().getDevice();
+
+        resetRobot();
 
         visibleCursor = ((JFrame)SwingUtilities.getWindowAncestor(panel))
                             .getContentPane()
@@ -34,7 +35,19 @@ public class CursorManager {
     }
 
     public void Update() {
-        r.mouseMove(posX, posY);
+        if (previousDevice != frame.getGraphicsConfiguration().getDevice()) {
+            resetRobot();
+        }
+
+        previousDevice = frame.getGraphicsConfiguration().getDevice();
+
+        GraphicsDevice device = frame.getGraphicsConfiguration().getDevice();
+        java.awt.Rectangle deviceBounds =
+            device.getDefaultConfiguration().getBounds();
+
+        r.mouseMove(
+            (int)deviceBounds.getX() + device.getDisplayMode().getWidth() / 2,
+            (int)deviceBounds.getY() + device.getDisplayMode().getHeight() / 2);
     }
 
     public void toggleCursor() {
@@ -45,14 +58,33 @@ public class CursorManager {
             frame.getContentPane().setCursor(visibleCursor);
             visible = true;
         }
-        //resetRobot();
     }
 
-    public void resetRobot(){
+    public void resetRobot() {
         try {
             r = new Robot(frame.getGraphicsConfiguration().getDevice());
+            System.out.println(frame.getGraphicsConfiguration()
+                                   .getDevice()
+                                   .getDisplayMode()
+                                   .getWidth());
         } catch (AWTException e) {
             System.out.println("Error creating robot");
         }
+    }
+
+    public double getX() {
+        GraphicsDevice device = frame.getGraphicsConfiguration().getDevice();
+        java.awt.Rectangle deviceBounds =
+            device.getDefaultConfiguration().getBounds();
+
+        return MouseInfo.getPointerInfo().getLocation().getX() -
+            deviceBounds.getX();
+    }
+
+    public double getWidth() {
+        return frame.getGraphicsConfiguration()
+            .getDevice()
+            .getDisplayMode()
+            .getWidth();
     }
 }
