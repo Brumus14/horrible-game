@@ -27,9 +27,6 @@ public class Player {
     private Rectangle breathBackground;
     private Rectangle breathRect;
     private boolean breathCooldown = false;
-    private Rectangle heartbeat;
-    private double heartTimer = 0;
-    private boolean heartUp = true;
 
     public Player(GameArena arena, double posX, double posY, double plane,
                   double sp, double rSp, Generator g, Raycaster r,
@@ -55,10 +52,6 @@ public class Player {
                                    (double)600, (double)20, "blue");
         arena.addRectangle(breathBackground);
         arena.addRectangle(breathRect);
-
-        heartbeat =
-            new Rectangle(0, 0, c.getWidth(), c.getHeight(), "%ff000000");
-        arena.addRectangle(heartbeat);
     }
 
     public double getPositionX() {
@@ -257,46 +250,5 @@ public class Player {
         if (breath >= breathMax) {
             breathCooldown = false;
         }
-
-        if (heartUp) {
-            heartTimer +=
-                (1 - heartTimer) /
-                (Math.sqrt(
-                    Math.pow(positionX - (gen.endLocation[0] + 0.5), 2) +
-                    Math.pow(positionY - (gen.endLocation[1] + 0.5), 2))) *
-                2;
-        } else {
-            heartTimer -=
-                (heartTimer) /
-                (Math.sqrt(
-                    Math.pow(positionX - (gen.endLocation[0] + 0.5), 2) +
-                    Math.pow(positionY - (gen.endLocation[1] + 0.5), 2))) *
-                2;
-        }
-
-        if (1 - heartTimer < 0.01) {
-            heartUp = false;
-            heartTimer = 0.99;
-        } else if (1 - heartTimer > 0.99) {
-            heartUp = true;
-            heartTimer = 0;
-        }
-
-        //        System.out.println("ff0000" + Integer.toHexString((int)(((30 -
-        //        Math.sqrt(Math.pow(positionX - (gen.endLocation[0] + 0.5), 2)
-        //        +
-        //                Math.pow(positionY - (gen.endLocation[1] + 0.5), 2)))
-        //                / 100) * Integer.valueOf("000000ff", 16))));
-        //        System.out.println((((30 - Math.sqrt(Math.pow(positionX -
-        //        (gen.endLocation[0] + 0.5), 2) +
-        //                Math.pow(positionY - (gen.endLocation[1] + 0.5), 2)))
-        //                / 100)));
-        String suffix = Integer.toHexString(
-            (int)(Integer.valueOf("000000ff", 16) * heartTimer / 20));
-        if (suffix.length() == 1) {
-            suffix = "0" + suffix;
-        }
-        heartbeat.setColour("%ff0000" + suffix);
-        System.out.println(heartTimer + " " + suffix);
     }
 }
