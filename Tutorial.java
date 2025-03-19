@@ -18,7 +18,7 @@ public class Tutorial {
     }
 
     public void nextText() {
-        if (textIndex < text.length) {
+        if (textIndex < text.length - 1) {
             textIndex++;
 
             currentText.setText(text[textIndex]);
