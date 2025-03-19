@@ -4,10 +4,6 @@ import java.awt.event.*;
 
 public class Game {
     public static void main(String[] args) {
-        // Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-        // int screenWidth = screen.width;
-        // int screenHeight = screen.height;
-
         GraphicsDevice graphics =
             GraphicsEnvironment.getLocalGraphicsEnvironment()
                 .getDefaultScreenDevice();
@@ -16,23 +12,17 @@ public class Game {
 
         GameArena arena = new GameArena(screenWidth, screenHeight);
 
-        // GameMap map = new GameMap(5, 5);
-        // map.SetMap(new int[][] {
-        //     {1, 1, 1, 1, 1},
-        //     {1, 0, 0, 1, 1},
-        //     {1, 1, 0, 1, 1},
-        //     {1, 0, 0, 0, 1},
-        //     {1, 1, 1, 1, 1},
-        // });
+        CursorManager c = new CursorManager(arena.getPanel(), screenWidth / 2,
+                                            screenHeight / 2);
+        c.toggleCursor();
+
+        Background background = new Background(arena, 270, c);
 
         GameMap map = new GameMap(24, 24);
         Generator g = new Generator();
         g.randomise();
         g.createPath();
         g.load(map);
-        CursorManager c = new CursorManager(arena.getPanel(), screenWidth / 2,
-                                            screenHeight / 2);
-        c.toggleCursor();
 
         Raycaster raycaster = new Raycaster(arena, 480);
 
@@ -59,6 +49,10 @@ public class Game {
                 previousTPressed = true;
             } else {
                 previousTPressed = false;
+            }
+
+            if (arena.letterPressed('y')) {
+                tutorial.endTutorial();
             }
 
             if (arena.escPressed() && !escHeld) {
