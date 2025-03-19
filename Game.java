@@ -16,8 +16,6 @@ public class Game {
                                             screenHeight / 2);
         c.toggleCursor();
 
-        Background background = new Background(arena, 270, c);
-
         GameMap map = new GameMap(24, 24);
         Generator g = new Generator();
         g.randomise();
@@ -25,6 +23,8 @@ public class Game {
         g.load(map);
 
         Raycaster raycaster = new Raycaster(arena, 480);
+
+        Background background = new Background(arena, 90, c, raycaster);
 
         Tutorial tutorial = new Tutorial(arena, c);
 
@@ -75,6 +75,7 @@ public class Game {
                 raycaster.raycast(map, player);
                 c.Update();
                 jack.Update();
+                background.update();
             }
         }
 

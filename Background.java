@@ -1,85 +1,72 @@
 public class Background {
     private Raycaster raycaster;
     private Rectangle[] lines;
-    private Rectangle[] initialLines;
+    private double height;
 
     public Background(GameArena arena, int lineCount, CursorManager cursor,
                       Raycaster rycst) {
         raycaster = rycst;
         lines = new Rectangle[lineCount];
 
-        double height = cursor.getHeight() / lineCount;
+        height = cursor.getHeight() / lineCount;
 
         int r = 0x44;
         int g = 0x44;
         int b = 0x44;
 
+        double brightness = 1;
+
+        int red = (int)(brightness * r);
+        int green = (int)(brightness * g);
+        int blue = (int)(brightness * b);
+        int colour = (red << 16) | (green << 8) | blue;
+
+        Rectangle background =
+            new Rectangle(0, cursor.getHeight() / 2, cursor.getWidth(),
+                          cursor.getHeight() / 2, "");
+        background.setColour(String.format("#%06x", colour));
+        background.setDepth(1000);
+        arena.addRectangle(background);
+
         for (int i = 0; i < lineCount; i++) {
             if (i <= lineCount / 2) {
-                double brightness = (1 - ((double)i / (lineCount / 2))) / 4;
+                brightness = (1 - ((double)i / (lineCount / 2))) / 4;
 
-                int red = (int)(brightness * r);
-                int green = (int)(brightness * g);
-                int blue = (int)(brightness * b);
-                int colour = (red << 16) | (green << 8) | blue;
+                red = (int)(brightness * r);
+                green = (int)(brightness * g);
+                blue = (int)(brightness * b);
+                colour = (red << 16) | (green << 8) | blue;
 
-                Rectangle ceiling = lines[i];
-                ceiling =
+                Rectangle ceiling =
                     new Rectangle(0, i * height, cursor.getWidth(), height, "");
                 ceiling.setDepth(999);
                 ceiling.setColour(String.format("#%06x", colour));
 
-                arena.addRectangle(ceiling);
+                lines[i] = ceiling;
             } else {
-                double brightness =
-                    ((double)(i - lineCount / 2) / (lineCount / 2));
+                brightness = ((double)(i - lineCount / 2) / (lineCount / 2));
 
-                int red = (int)(brightness * r);
-                int green = (int)(brightness * g);
-                int blue = (int)(brightness * b);
-                int colour = (red << 16) | (green << 8) | blue;
+                red = (int)(brightness * r);
+                green = (int)(brightness * g);
+                blue = (int)(brightness * b);
+                colour = (red << 16) | (green << 8) | blue;
 
-                Rectangle ground = lines[i];
-                ground =
+                Rectangle ground =
                     new Rectangle(0, i * height, cursor.getWidth(), height, "");
                 ground.setDepth(999);
                 ground.setColour(String.format("#%06x", colour));
 
-                arena.addRectangle(ground);
+                lines[i] = ground;
             }
+
+            arena.addRectangle(lines[i]);
         }
-
-        initialLines = lines;
-
-        // double brightness = 0;
-        //
-        // int red = (int)(brightness * r);
-        // int green = (int)(brightness * g);
-        // int blue = (int)(brightness * b);
-        // int colour = (red << 16) | (green << 8) | blue;
-        //
-        // Rectangle ceiling = new Rectangle(
-        //     0, -cursor.getHeight(), cursor.getWidth(), cursor.getHeight(),
-        //     "");
-        // ceiling.setDepth(999);
-        // ceiling.setColour(String.format("#%06x", colour));
-        //
-        // brightness = ;
-        //
-        // red = (int)(brightness * r);
-        // green = (int)(brightness * g);
-        // blue = (int)(brightness * b);
-        // colour = (red << 16) | (green << 8) | blue;
-        //
-        // Rectangle ground = new Rectangle(
-        //     0, -cursor.getHeight(), cursor.getWidth(), cursor.getHeight(),
-        //     "");
-        // ground.setDepth(999);
-        // ground.setColour(String.format("#%06x", colour));
     }
 
     public void update() {
+        System.out.println(raycaster.getLineOffsetY());
         for (int i = 0; i < lines.length; i++) {
+            lines[i].setYPosition(i * height + raycaster.getLineOffsetY());
         }
     }
 }
