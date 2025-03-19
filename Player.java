@@ -246,9 +246,11 @@ public class Player {
 
         if (breath <= 0) {
             breathCooldown = true;
+            breathRect.setColour("red");
         }
-        if (breath >= breathMax) {
+        if (breath >= breathMax && breathCooldown) {
             breathCooldown = false;
+            breathRect.setColour("blue");
         }
     }
 }

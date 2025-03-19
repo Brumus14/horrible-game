@@ -5,9 +5,9 @@ public class Tutorial {
         "Ctrl = crouch, shift = sprint, Esc = pause, P = quit, ...",
         "M = disable mouse, K = decrease mouse, L = increase mouse, ...",
         "The objective is to get to the end of the 'maze', ...",
-        "The bottom displays breath, Spriting uses breath, ...",
+        "The bottom displays breath, Sprinting uses breath, ...",
         "crouching makes you hold your breath and makes you silent ...",
-        "also watch your heatbeat on screen it may be helpful",
+        "also watch your heartbeat on screen it may be helpful",
         "try not to make much noise because ...",
         "it cant see you but it can hear you 😈"};
 
