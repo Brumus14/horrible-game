@@ -8,9 +8,9 @@ public class Sprite {
     private double depth;
     private Player player;
     private Raycaster raycaster;
-    private int red;
-    private int green;
-    private int blue;
+    private int initialRed;
+    private int initialGreen;
+    private int initialBlue;
 
     public Sprite(GameArena a, Player p, double x, double y, double w, double h,
                   int rgb, Raycaster r) {
@@ -23,9 +23,9 @@ public class Sprite {
         shape = new Rectangle(0, 0, 0, 0, "black");
         arena.addRectangle(shape);
         raycaster = r;
-        red = (rgb >> 16) & 0xFF;
-        green = (rgb >> 8) & 0xFF;
-        blue = rgb & 0xFF;
+        initialRed = (rgb >> 16) & 0xFF;
+        initialGreen = (rgb >> 8) & 0xFF;
+        initialBlue = rgb & 0xFF;
     }
 
     public double getDepth() {
@@ -89,5 +89,14 @@ public class Sprite {
 
         depth = distance;
         shape.setDepth(distance);
+
+        double brightness = Math.min(
+            Math.exp(-distance / raycaster.getBrightnessFactor()), 0.5);
+        int red = (int)(brightness * initialRed);
+        int green = (int)(brightness * initialGreen);
+        int blue = (int)(brightness * initialBlue);
+        int colour = (red << 16) | (green << 8) | blue;
+
+        shape.setColour(String.format("#%06x", colour));
     }
 }
