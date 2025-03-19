@@ -1,5 +1,6 @@
 public class Raycaster {
     private Rectangle[] lines;
+    private double[] lineDepths;
     private int lineCount;
     private GameArena arena;
 
@@ -14,6 +15,14 @@ public class Raycaster {
             lines[i] = new Rectangle(lineWidth * i, 0, lineWidth, 0, "black");
             arena.addRectangle(lines[i]);
         }
+    }
+
+    public int getLineCount() {
+        return lineCount;
+    }
+
+    public double getLineDepth(int line) {
+        return lineDepths[line];
     }
 
     // y is flipped
