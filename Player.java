@@ -11,6 +11,8 @@ public class Player {
     private double rotationSpeed;
     private double mouseRotateSpeed = 0.0005;
     private int screenWidth;
+    public boolean makingNoise = false;
+    private boolean crouched = false;
 
     public Player(double posX, double posY, double plane, double sp, double rSp,
                   int screenWidth) {
@@ -63,7 +65,7 @@ public class Player {
 
     public void HandleMovement(GameArena arena) {
         // speed increase if shift
-        if (arena.shiftPressed()) {
+        if (arena.shiftPressed() && !crouched) {
             speed = origSpeed * 2;
         } else {
             speed = origSpeed;
@@ -113,5 +115,12 @@ public class Player {
 
         planeX = 0.66 * Math.cos(rotation);
         planeY = 0.66 * -Math.sin(rotation);
+
+        if((arena.letterPressed('w') || arena.letterPressed('a') || arena.letterPressed('d') || arena.letterPressed('s')) && !crouched){
+            makingNoise = true;
+        }
+        else{
+            makingNoise = false;
+        }
     }
 }
