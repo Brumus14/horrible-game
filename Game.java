@@ -24,7 +24,7 @@ public class Game {
 
         Raycaster raycaster = new Raycaster(arena, 480);
 
-        Background background = new Background(arena, 90, c, raycaster);
+        Background background = new Background(arena, 270, c, raycaster);
 
         Tutorial tutorial = new Tutorial(arena, c);
 
