@@ -154,8 +154,8 @@ public class Raycaster {
 
             switch (map.GetTile(mapX, mapY)) {
             case 1:
-                colour = ((int)(brightness * 53) << 16) |
-                         ((int)(brightness * 53) << 8) | (int)(brightness * 53);
+                colour = ((int)(brightness * 93) << 16) |
+                         ((int)(brightness * 93) << 8) | (int)(brightness * 93);
                 line.setColour(String.format("#%06x", colour));
                 break;
             case 2:
