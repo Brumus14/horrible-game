@@ -44,7 +44,7 @@ public class Enemy {
             listLocations = new ArrayList<>();
             // visited = new ArrayList<>();
 
-            search(20, (int)player.getPositionX(), (int)player.getPositionY());
+            search(30, (int)player.getPositionX(), (int)player.getPositionY());
             return true;
         }
         return false;
@@ -299,13 +299,13 @@ public class Enemy {
         if (player.crouched && !player.moving) {
             hearingDistance = 0;
         } else if (player.crouched) {
-            hearingDistance = 2;
+            hearingDistance = 3;
         } else if (player.sprinting && player.moving) {
             hearingDistance = 10;
         } else if (player.moving) {
             hearingDistance = 7;
         } else {
-            hearingDistance = 1;
+            hearingDistance = 2;
         }
 
         heartTimer /=
