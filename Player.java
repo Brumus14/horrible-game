@@ -21,6 +21,7 @@ public class Player {
     private boolean mouseHeld;
     private Raycaster raycaster;
     private CursorManager cursor;
+    public boolean win;
 
     public Player(double posX, double posY, double plane, double sp, double rSp,
                   int screenWidth, Generator g, Raycaster r, CursorManager c) {
@@ -140,12 +141,12 @@ public class Player {
 
         if (gen.area[(int)positionY][(
                 int)(positionX + xChange +
-                     (hitboxSize * (xChange / Math.abs(xChange))))] == 0) {
+                     (hitboxSize * (xChange / Math.abs(xChange))))] != 1) {
             positionX += xChange;
         }
         if (gen.area[(int)(positionY + yChange +
                            (hitboxSize * (yChange / Math.abs(yChange))))]
-                    [(int)positionX] == 0) {
+                    [(int)positionX] != 1) {
             positionY += yChange;
         }
 
@@ -189,6 +190,11 @@ public class Player {
             mouseHeld = true;
         } else {
             mouseHeld = false;
+        }
+
+        if(Math.sqrt(Math.pow(positionX - (gen.endLocation[0] + 0.5), 2) +
+                Math.pow(positionY - (gen.endLocation[1] + 0.5), 2)) < 0.5){
+            win = true;
         }
     }
 }
