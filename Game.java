@@ -4,14 +4,13 @@ import java.awt.event.*;
 
 public class Game {
     public static void main(String[] args) {
-        Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-        int screenWidth = screen.width;
-        int screenHeight = screen.height;
+        //Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+        //int screenWidth = screen.width;
+        //int screenHeight = screen.height;
 
-        // GraphicsDevice graphics =
-        // GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-        // int screenWidth = graphics.getDisplayMode().getWidth();
-        // int screenHeight = graphics.getDisplayMode().getHeight();
+        GraphicsDevice graphics = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+        int screenWidth = graphics.getDisplayMode().getWidth();
+        int screenHeight = graphics.getDisplayMode().getHeight();
 
         GameArena arena = new GameArena(screenWidth, screenHeight);
 
