@@ -37,7 +37,7 @@ public class Enemy {
             listLocations = new ArrayList<>();
             // visited = new ArrayList<>();
 
-            search(20, (int)player.getPositionX(), (int)player.getPositionY());
+            search(30, (int)player.getPositionX(), (int)player.getPositionY());
             return true;
         }
         return false;

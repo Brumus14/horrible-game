@@ -10,7 +10,7 @@ public class Player {
     private double speed;
     private double origSpeed;
     private double rotationSpeed;
-    private double mouseRotateSpeed = 0.0005;
+    private double mouseRotateSpeed = 0.001;
     private double centreX;
     public boolean moving = false;
     public boolean crouched = false;
@@ -26,6 +26,7 @@ public class Player {
     private double breathMax = 100;
     private Rectangle breathBackground;
     private Rectangle breathRect;
+    private boolean breathCooldown = false;
 
     public Player(GameArena arena, double posX, double posY, double plane, double sp, double rSp,
                   Generator g, Raycaster r, CursorManager c) {
@@ -94,7 +95,7 @@ public class Player {
         double yChange = 0;
 
         // speed increase if shift
-        if (arena.shiftPressed() && !crouched && breath > 0) {
+        if (arena.shiftPressed() && !crouched && breath > 0 && !breathCooldown) {
             speed = origSpeed * 2;
             sprinting = true;
         } else {
@@ -102,7 +103,7 @@ public class Player {
             sprinting = false;
         }
 
-        if (arena.ctrlPressed() && breath > 0) {
+        if (arena.ctrlPressed() && breath > 0 && !breathCooldown) {
             crouched = true;
             speed = origSpeed * 0.5;
 
@@ -140,6 +141,17 @@ public class Player {
         if (arena.letterPressed('d')) {
             xChange += Math.cos(rotation);
             yChange -= Math.sin(rotation);
+        }
+
+        if(arena.letterPressed('l')) {
+            if(mouseRotateSpeed < 0.01) {
+                mouseRotateSpeed += 0.00005;
+            }
+        }
+        if (arena.letterPressed('k')) {
+            if(mouseRotateSpeed > 0.00001) {
+                mouseRotateSpeed -= 0.00001;
+            }
         }
 
         double normaliser =
@@ -227,5 +239,11 @@ public class Player {
         breathRect.setWidth(6 * breath);
         breathRect.setXPosition(cursor.getWidth() / 2 - 300 + (300 - 3 * breath));
 
+        if(breath <= 0){
+            breathCooldown = true;
+        }
+        if(breath >= breathMax){
+            breathCooldown = false;
+        }
     }
 }
