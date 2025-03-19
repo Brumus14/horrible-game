@@ -39,7 +39,7 @@ public class Game {
         Tutorial tutorial = new Tutorial(arena);
 
         // plane of 10 for drunk
-        Player player = new Player(12.5, 1.5, 0.66, 0.02, 0.03, screenWidth, g,
+        Player player = new Player(arena, 12.5, 1.5, 0.66, 0.02, 0.03, g,
                                    raycaster, c);
         Enemy jack = new Enemy(arena, g, player, raycaster);
 

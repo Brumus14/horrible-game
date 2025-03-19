@@ -22,9 +22,13 @@ public class Player {
     private Raycaster raycaster;
     private CursorManager cursor;
     public boolean win;
+    private double breath;
+    private double breathMax = 100;
+    private Rectangle breathBackground;
+    private Rectangle breathRect;
 
-    public Player(double posX, double posY, double plane, double sp, double rSp,
-                  int screenWidth, Generator g, Raycaster r, CursorManager c) {
+    public Player(GameArena arena, double posX, double posY, double plane, double sp, double rSp,
+                  Generator g, Raycaster r, CursorManager c) {
         positionX = posX;
         positionY = posY;
         rotation = 0;
@@ -37,6 +41,12 @@ public class Player {
         gen = g;
         raycaster = r;
         cursor = c;
+        breath = breathMax;
+
+        breathBackground = new Rectangle(c.getWidth() / 2 - 303, c.getHeight() - 43, (double)606, (double)26, "grey");
+        breathRect = new Rectangle(c.getWidth() / 2 - 300, c.getHeight() - 40, (double)600, (double)20, "blue");
+        arena.addRectangle(breathBackground);
+        arena.addRectangle(breathRect);
     }
 
     public double getPositionX() {
@@ -84,7 +94,7 @@ public class Player {
         double yChange = 0;
 
         // speed increase if shift
-        if (arena.shiftPressed() && !crouched) {
+        if (arena.shiftPressed() && !crouched && breath > 0) {
             speed = origSpeed * 2;
             sprinting = true;
         } else {
@@ -92,7 +102,7 @@ public class Player {
             sprinting = false;
         }
 
-        if (arena.ctrlPressed()) {
+        if (arena.ctrlPressed() && breath > 0) {
             crouched = true;
             speed = origSpeed * 0.5;
 
@@ -196,5 +206,26 @@ public class Player {
                 Math.pow(positionY - (gen.endLocation[1] + 0.5), 2)) < 0.5){
             win = true;
         }
+
+        if(breath > 0){
+            if(crouched){
+                breath -= 0.25;
+            }
+            else if(moving && sprinting){
+                breath -= 0.75;
+            }
+        }
+        if(breath < breathMax){
+            if(moving && !crouched && !sprinting){
+                breath += 0.25;
+            }
+            else if (!moving && !crouched && !sprinting){
+                breath += 0.5;
+            }
+        }
+
+        breathRect.setWidth(6 * breath);
+        breathRect.setXPosition(cursor.getWidth() / 2 - 300 + (300 - 3 * breath));
+
     }
 }
