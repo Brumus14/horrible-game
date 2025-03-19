@@ -14,6 +14,7 @@ public class Enemy {
     private boolean noiseCooldown = true;
     private Sprite displaySprite;
     public boolean killPlayer = false;
+    private int hearingDistance = 5;
 
 
     public Enemy(GameArena arena, Generator gen, Player player, Raycaster r) {
@@ -34,7 +35,7 @@ public class Enemy {
     private boolean checkNoise() {
         if (player.makingNoise &&
             Math.sqrt(Math.pow(player.getPositionX() - xPos, 2) +
-                      Math.pow(player.getPositionY() - yPos, 2)) < 10) {
+                      Math.pow(player.getPositionY() - yPos, 2)) < hearingDistance) {
             // targetLocation[0][0] = (int)player.getPositionX();
             // targetLocation[0][1] = (int)player.getPositionY();
             listLocations =
@@ -273,6 +274,16 @@ public class Enemy {
         displaySprite.Update();
         if (noiseCooldown) {
             frameCounter++;
+        }
+
+        if(player.crouched){
+            hearingDistance = 1;
+        }
+        else if(player.sprinting){
+            hearingDistance = 10;
+        }
+        else{
+            hearingDistance = 5;
         }
     }
 }

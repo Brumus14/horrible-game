@@ -13,7 +13,8 @@ public class Player {
     private double mouseRotateSpeed = 0.0005;
     private double centreX;
     public boolean makingNoise = false;
-    private boolean crouched = false;
+    public boolean crouched = false;
+    public boolean sprinting = false;
     private Generator gen;
     private double hitboxSize = 0.2;
     private boolean mouseRotation = true;
@@ -81,8 +82,10 @@ public class Player {
         // speed increase if shift
         if (arena.shiftPressed() && !crouched) {
             speed = origSpeed * 2;
+            sprinting = true;
         } else {
             speed = origSpeed;
+            sprinting = false;
         }
 
         if (arena.ctrlPressed()) {
