@@ -18,7 +18,7 @@ public class CursorManager {
         frame = ((JFrame)SwingUtilities.getWindowAncestor(panel));
 
         try {
-            r = new Robot();
+            r = new Robot(frame.getGraphicsConfiguration().getDevice());
         } catch (AWTException e) {
             System.out.println("Error creating robot");
         }
@@ -44,6 +44,15 @@ public class CursorManager {
         } else {
             frame.getContentPane().setCursor(visibleCursor);
             visible = true;
+        }
+        resetRobot();
+    }
+
+    public void resetRobot(){
+        try {
+            r = new Robot(frame.getGraphicsConfiguration().getDevice());
+        } catch (AWTException e) {
+            System.out.println("Error creating robot");
         }
     }
 }
