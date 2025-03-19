@@ -13,9 +13,11 @@ public class Player {
     private int screenWidth;
     public boolean makingNoise = false;
     private boolean crouched = false;
+    private Generator gen;
+    private double hitboxSize = 0;
 
     public Player(double posX, double posY, double plane, double sp, double rSp,
-                  int screenWidth) {
+                  int screenWidth, Generator g) {
         positionX = posX;
         positionY = posY;
         rotation = 0;
@@ -25,6 +27,7 @@ public class Player {
         origSpeed = sp;
         rotationSpeed = rSp;
         this.screenWidth = screenWidth;
+        gen = g;
     }
 
     public double getPositionX() {
@@ -64,6 +67,9 @@ public class Player {
     }
 
     public void HandleMovement(GameArena arena) {
+        double xChange = 0;
+        double yChange = 0;
+
         // speed increase if shift
         if (arena.shiftPressed() && !crouched) {
             speed = origSpeed * 2;
@@ -73,23 +79,36 @@ public class Player {
 
         // position movement
         if (arena.letterPressed('w')) {
-            positionX += Math.sin(rotation) * speed;
-            positionY += Math.cos(rotation) * speed;
+            xChange += Math.sin(rotation);
+            yChange += Math.cos(rotation);
         }
 
         if (arena.letterPressed('s')) {
-            positionX -= Math.sin(rotation) * speed;
-            positionY -= Math.cos(rotation) * speed;
+            xChange -= Math.sin(rotation);
+            yChange -= Math.cos(rotation);
         }
 
         if (arena.letterPressed('a')) {
-            positionX -= Math.cos(rotation) * speed;
-            positionY += Math.sin(rotation) * speed;
+            xChange -= Math.cos(rotation);
+            yChange += Math.sin(rotation);
         }
 
         if (arena.letterPressed('d')) {
-            positionX += Math.cos(rotation) * speed;
-            positionY -= Math.sin(rotation) * speed;
+            xChange += Math.cos(rotation);
+            yChange -= Math.sin(rotation);
+        }
+
+        double normaliser = (Math.sqrt(Math.pow(xChange, 2) + Math.pow(yChange, 2)));
+        xChange /= normaliser;
+        yChange /= normaliser;
+        xChange *= speed;
+        yChange *= speed;
+
+        if(gen.area[(int)positionY][(int)(positionX + xChange + (hitboxSize * (xChange/Math.abs(xChange))))] == 0) {
+            positionX += xChange;
+        }
+        if(gen.area[(int)(positionY + yChange + (hitboxSize * (yChange/Math.abs(yChange))))][(int)positionX] == 0) {
+            positionY += yChange;
         }
 
         if (arena.leftPressed()) {

@@ -9,21 +9,22 @@ public class Enemy {
     private ArrayList<double[]> listLocations;
     private ArrayList<ArrayList<Integer>> visited;
     private double[] targetLocation;
-    private boolean moving;
     private double speed = 0.01;
     int frameCounter = 0;
     boolean noiseCooldown = true;
+    Sprite displaySprite;
 
-    public Enemy(Generator gen, Player player) {
+    public Enemy(GameArena arena, Generator gen, Player player) {
         this.gen = gen;
         this.player = player;
-        //xPos = (int)(Math.random() * (gen.mapSize - 2)) + 1;
-        //yPos = gen.mapSize - 2;
+        xPos = (int)(Math.random() * (gen.mapSize - 2)) + 1;
+        yPos = gen.mapSize - 2;
         xPos = 12;
         yPos = 1;
         listLocations = new ArrayList<>();
-        listLocations.add(new double[]{12, 1});
+        listLocations.add(new double[]{12.5, 1.5});
         targetLocation = listLocations.getFirst();
+        displaySprite = new Sprite(arena, player, xPos + 0.5, yPos + 1.5, 200, 200, "purple");
     }
 
     private boolean checkNoise(){
@@ -33,6 +34,12 @@ public class Enemy {
             listLocations = new ArrayList<>(Arrays.asList(listLocations.getFirst()));
             visited = new ArrayList<>();
             search(10, (int)player.getPositionX(), (int)player.getPositionY());
+            if(listLocations.size() > 1){
+                speed = 0.04;
+            }
+            else{
+                speed = 0.01;
+            }
             return true;
         }
         return false;
@@ -94,30 +101,21 @@ public class Enemy {
                 targetLocation = listLocations.getFirst();
             }
             else{
-                /*int moveX = (int)(Math.random() * 2);
-                int movePos = (int)(Math.random() * 2);
-                if(moveX == 1){
-                    if(targetLocation[0] == gen.mapSize - 2){
-                        targetLocation[0] += -1;
-                    }
-                    else if (targetLocation[0] == 1){
-                        targetLocation[0] += 1;
-                    }
-                    else{
+                boolean possibleMove = false;
+                while(!possibleMove){
+                    int moveX = (int)(Math.random() * 2);
+                    int movePos = (int)(Math.random() * 2);
+                    System.out.println(moveX + " " + movePos + " " + (targetLocation[1] + movePos));
+                    if(moveX == 1 && (targetLocation[0] + (movePos == 1 ? 1 : -1)) > 0 && (targetLocation[0] + (movePos == 1 ? 1 : -1)) < 24 && gen.area[(int)targetLocation[1]][(int)targetLocation[0] + (movePos == 1 ? 1 : -1)] == 0){
                         targetLocation[0] += movePos == 1 ? 1 : -1;
+                        possibleMove = true;
+                    }
+                    else if ((targetLocation[1] + (movePos == 1 ? 1 : -1)) > 0 && (targetLocation[1] + (movePos == 1 ? 1 : -1)) < 24 && gen.area[(int)targetLocation[1] + (movePos == 1 ? 1 : -1)][(int)targetLocation[0]] == 0){
+                        targetLocation[1] += movePos == 1 ? 1 : -1;
+                        possibleMove = true;
                     }
                 }
-                else{
-                    if(targetLocation[1] == gen.mapSize - 2){
-                        targetLocation[1] += -1;
-                    }
-                    else if (targetLocation[1] == 1){
-                        targetLocation[1] += 1;
-                    }
-                    else{
-                        targetLocation[1] += movePos == 1 ? 1 : -1;
-                    }
-                }*/
+
                 listLocations.add(targetLocation);
             }
         }
@@ -132,10 +130,14 @@ public class Enemy {
             else{
                 noiseCooldown = false;
             }
-            System.out.println("Did a check noise: " + listLocations.size() + "PlayerPos: " +
-                    (int)player.getPositionX() + ", " + (int)player.getPositionY() + "EnemyPos: " + (int)xPos + ", " + (int)yPos);
+            //System.out.println("Did a check noise: " + listLocations.size() + "PlayerPos: " +
+                    //(int)player.getPositionX() + ", " + (int)player.getPositionY() + "EnemyPos: " + (int)xPos + ", " + (int)yPos);
         }
+        System.out.println("xPos: " + xPos + " yPos: " + yPos);
         move();
+        displaySprite.setPositionX(xPos);
+        displaySprite.setPositionY(yPos);
+        displaySprite.Update();
         if(noiseCooldown){
             frameCounter++;
         }

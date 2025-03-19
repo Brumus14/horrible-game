@@ -33,12 +33,12 @@ public class Game {
                                             screenHeight / 2);
         c.toggleCursor();
 
-        Player player = new Player(12.5, 1.5, 0.66, 0.02, 0.03, screenWidth);
-        Enemy jack = new Enemy(g, player);
+        Player player = new Player(12.5, 1.5, 0.66, 0.02, 0.03, screenWidth, g);
+        Enemy jack = new Enemy(arena, g, player);
 
         Raycaster raycaster = new Raycaster(arena, 480);
 
-        Sprite enemy = new Sprite(arena, player, 12.5, 1.5, 200, 200, "blue");
+        //Sprite enemy = new Sprite(arena, player, 12.5, 1.5, 200, 200, "blue");
 
         boolean paused = false;
         boolean escHeld = false;
@@ -48,7 +48,7 @@ public class Game {
         //                  raycaster.getLineDepths());
 
         while (!arena.letterPressed('p')) {
-            enemy.move(0.001, 0);
+            //enemy.move(0.001, 0);
             if (arena.escPressed() && !escHeld) {
                 c.Update();
                 c.toggleCursor();
@@ -65,7 +65,7 @@ public class Game {
 
             if (!paused) {
                 player.HandleMovement(arena);
-                enemy.Update();
+                //enemy.Update();
                 raycaster.raycast(map, player);
                 c.Update();
                 jack.Update();
