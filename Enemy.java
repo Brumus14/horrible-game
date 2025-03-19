@@ -48,7 +48,7 @@ public class Enemy {
         return false;
     }
 
-    public int search(int depth, int x, int y) {
+    /*public int search(int depth, int x, int y){
         System.out.println(x + " " + y);
         visited.add(new ArrayList<Integer>(Arrays.asList(x, y)));
         if (x == (int)xPos && y == (int)yPos) {
@@ -97,6 +97,40 @@ public class Enemy {
             }
         }
         return 0;
+    }*/
+
+    public int search(int depth, int x, int y) {
+        ArrayList<Node> next = new ArrayList<>();
+        ArrayList<Node> visited = new ArrayList<>();
+        visited.add(new ArrayList<>(Arrays.asList(x, y)));
+
+        for(int i = 0; i < depth; i++){
+            for(ArrayList<Integer> list : next){
+                if(list.get(0) == xPos && list.get(1) == yPos){
+
+                }
+                else{
+                    if(!visited.contains(new ArrayList<>(Arrays.asList(list.get(0) + 1, list.get(1))))){
+                        next.add(new ArrayList<>(Arrays.asList(list.get(0) + 1, list.get(1))));
+                    }
+                    if(!visited.contains(new ArrayList<>(Arrays.asList(list.get(0) - 1, list.get(1))))){
+                        next.add(new ArrayList<>(Arrays.asList(list.get(0) - 1, list.get(1))));
+                    }
+                    if(!visited.contains(new ArrayList<>(Arrays.asList(list.get(0), list.get(1) + 1)))){
+                        next.add(new ArrayList<>(Arrays.asList(list.get(0), list.get(1) + 1)));
+                    }
+                    if(!visited.contains(new ArrayList<>(Arrays.asList(list.get(0), list.get(1) - 1)))){
+                        next.add(new ArrayList<>(Arrays.asList(list.get(0), list.get(1) - 1)));
+                    }
+                    next.remove(list);
+                }
+            }
+
+            next.add(new ArrayList<>(Arrays.asList(x, y)));
+            next.add(new ArrayList<>(Arrays.asList(x, y)));
+            next.add(new ArrayList<>(Arrays.asList(x, y)));
+            next.add(new ArrayList<>(Arrays.asList(x, y)));
+        }
     }
 
     private void move() {
