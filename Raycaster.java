@@ -3,6 +3,7 @@ public class Raycaster {
     private double[] lineDepths;
     private int lineCount;
     private GameArena arena;
+    private double lineOffsetY = 0;
 
     public Raycaster(GameArena arena, int lineCount) {
         this.arena = arena;
@@ -32,6 +33,14 @@ public class Raycaster {
 
     public double[] getLineDepths() {
         return lineDepths;
+    }
+
+    public double getLineOffsetY() {
+        return lineOffsetY;
+    }
+
+    public void setLineOffsetY(double o) {
+        lineOffsetY = o;
     }
 
     // y is flipped
@@ -115,17 +124,9 @@ public class Raycaster {
             int lineHeight = (int)(h / perpWallDist);
             int drawStart = -lineHeight / 2 + h / 2;
 
-            if (drawStart < 0) {
-                drawStart = 0;
-            }
-
             int drawEnd = lineHeight / 2 + h / 2;
 
-            if (drawEnd >= h) {
-                drawEnd = h - 1;
-            }
-
-            line.setYPosition(drawStart);
+            line.setYPosition(drawStart + lineOffsetY);
             line.setHeight(drawEnd - drawStart);
 
             double brightness = Math.min(1, 2 / perpWallDist);

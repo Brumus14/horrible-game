@@ -17,9 +17,10 @@ public class Player {
     private double hitboxSize = 0.2;
     private boolean mouseRotation = true;
     private boolean mouseHeld;
+    private Raycaster raycaster;
 
     public Player(double posX, double posY, double plane, double sp, double rSp,
-                  int screenWidth, Generator g) {
+                  int screenWidth, Generator g, Raycaster r) {
         positionX = posX;
         positionY = posY;
         rotation = 0;
@@ -30,6 +31,7 @@ public class Player {
         rotationSpeed = rSp;
         centreX = screenWidth / 2;
         gen = g;
+        raycaster = r;
     }
 
     public double getPositionX() {
@@ -79,6 +81,24 @@ public class Player {
             speed = origSpeed;
         }
 
+        if (arena.ctrlPressed()) {
+            crouched = true;
+
+            double offset = raycaster.getLineOffsetY();
+
+            if (offset > -500) {
+                raycaster.setLineOffsetY(offset - 40);
+            }
+        } else {
+            crouched = false;
+
+            double offset = raycaster.getLineOffsetY();
+
+            if (offset < 0) {
+                raycaster.setLineOffsetY(offset + 40);
+            }
+        }
+
         // position movement
         if (arena.letterPressed('w')) {
             xChange += Math.sin(rotation);
@@ -100,16 +120,21 @@ public class Player {
             yChange -= Math.sin(rotation);
         }
 
-        double normaliser = (Math.sqrt(Math.pow(xChange, 2) + Math.pow(yChange, 2)));
+        double normaliser =
+            (Math.sqrt(Math.pow(xChange, 2) + Math.pow(yChange, 2)));
         xChange /= normaliser;
         yChange /= normaliser;
         xChange *= speed;
         yChange *= speed;
 
-        if(gen.area[(int)positionY][(int)(positionX + xChange + (hitboxSize * (xChange/Math.abs(xChange))))] == 0) {
+        if (gen.area[(int)positionY][(
+                int)(positionX + xChange +
+                     (hitboxSize * (xChange / Math.abs(xChange))))] == 0) {
             positionX += xChange;
         }
-        if(gen.area[(int)(positionY + yChange + (hitboxSize * (yChange/Math.abs(yChange))))][(int)positionX] == 0) {
+        if (gen.area[(int)(positionY + yChange +
+                           (hitboxSize * (yChange / Math.abs(yChange))))]
+                    [(int)positionX] == 0) {
             positionY += yChange;
         }
 
@@ -122,8 +147,10 @@ public class Player {
         }
 
         // rotation
-        if(mouseRotation) {
-            rotate((int)(MouseInfo.getPointerInfo().getLocation().getX() - centreX) * mouseRotateSpeed);
+        if (mouseRotation) {
+            rotate((int)(MouseInfo.getPointerInfo().getLocation().getX() -
+                         centreX) *
+                   mouseRotateSpeed);
         }
 
         while (rotation < 0) {
@@ -137,24 +164,24 @@ public class Player {
         planeX = 0.66 * Math.cos(rotation);
         planeY = 0.66 * -Math.sin(rotation);
 
-        if((arena.letterPressed('w') || arena.letterPressed('a') || arena.letterPressed('d') || arena.letterPressed('s')) && !crouched){
+        if ((arena.letterPressed('w') || arena.letterPressed('a') ||
+             arena.letterPressed('d') || arena.letterPressed('s')) &&
+            !crouched) {
             makingNoise = true;
-        }
-        else{
+        } else {
             makingNoise = false;
         }
 
-        if(arena.letterPressed('m')) {
-            if(!mouseHeld){
+        if (arena.letterPressed('m')) {
+            if (!mouseHeld) {
                 mouseRotation = !mouseRotation;
             }
-            mouseHeld= true;
-        }
-        else{
+            mouseHeld = true;
+        } else {
             mouseHeld = false;
         }
 
-        if(arena.letterPressed('r')) {
+        if (arena.letterPressed('r')) {
             centreX = MouseInfo.getPointerInfo().getLocation().getX();
         }
     }
