@@ -34,6 +34,7 @@ public class Game {
         c.toggleCursor();
 
         Player player = new Player(12.5, 1.5, 0.66, 0.02, 0.03, screenWidth);
+        Enemy jack = new Enemy(g, player);
 
         Raycaster raycaster = new Raycaster(arena, 480);
 
@@ -67,6 +68,7 @@ public class Game {
                 enemy.Update();
                 raycaster.raycast(map, player);
                 c.Update();
+                jack.Update();
             }
         }
 

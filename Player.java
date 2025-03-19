@@ -101,9 +101,7 @@ public class Player {
         }
 
         // rotation
-        rotate((int)(MouseInfo.getPointerInfo().getLocation().getX() -
-                     (screenWidth / 2)) *
-               mouseRotateSpeed);
+        rotate((int)(MouseInfo.getPointerInfo().getLocation().getX() - (screenWidth / 2)) * mouseRotateSpeed);
 
         while (rotation < 0) {
             rotation += 2 * Math.PI;
