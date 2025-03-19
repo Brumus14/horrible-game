@@ -4,7 +4,7 @@ public class Tutorial {
         "Controls: WASD = move, Mouse/Arrow keys = turning, ...",
         "Ctrl = crouch, shift = sprint, Esc = pause, P = quit, ...",
         "M = disable mouse, K = decrease mouse, L = increase mouse, ...",
-        "The objective is to get to the end of the 'maze', ...",
+        "The objective is to get to the end of the 'maze' roughly opposite where you start, ...",
         "The bottom displays breath, Sprinting uses breath, ...",
         "crouching makes you hold your breath and makes you silent ...",
         "also watch your heartbeat on screen it may be helpful",

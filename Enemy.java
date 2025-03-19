@@ -105,7 +105,7 @@ public class Enemy {
         Node curNode = getPathNode(depth, x, y);
         if (curNode != null) {
             listLocations = new ArrayList<>();
-            speed = 0.03;
+            speed = 0.025;
             curNode = curNode.prevNode;
             while (curNode != null) {
                 listLocations.add(
