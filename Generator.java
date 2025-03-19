@@ -1,8 +1,9 @@
 public class Generator {
-    int mapSize = 24;
-    int[][] area = new int[mapSize][mapSize];
-    int[] startLocation = new int[2];
-    int[] endLocation = new int[2];
+    public int mapSize = 24;
+    public int[][] area = new int[mapSize][mapSize];
+    public int[] startLocation = new int[2];
+    public int[] endLocation = new int[2];
+    public int startEnemyX = 0;
 
     public Generator() {
         startLocation[0] = mapSize / 2;
@@ -41,6 +42,9 @@ public class Generator {
             area[i + 1][nextX] = 0;
 
             curX = nextX;
+            if(i == mapSize /2){
+                startEnemyX = nextX;
+            }
         }
         endLocation[0] = curX;
         endLocation[1] = mapSize - 2;
