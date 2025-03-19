@@ -4,6 +4,8 @@ public class Raycaster {
     private int lineCount;
     private GameArena arena;
     private double lineOffsetY = 0;
+    private Player player;
+    private double brightessFactor = 0;
 
     public Raycaster(GameArena arena, int lineCount) {
         this.arena = arena;
@@ -17,6 +19,14 @@ public class Raycaster {
             lines[i] = new Rectangle(lineWidth * i, 0, lineWidth, 0, "black");
             arena.addRectangle(lines[i]);
         }
+    }
+
+    public void setPlayer(Player p) {
+        player = p;
+    }
+
+    public double getBrightnessFactor() {
+        return brightessFactor;
     }
 
     public int getLineCount() {
@@ -45,6 +55,12 @@ public class Raycaster {
 
     // y is flipped
     public void raycast(GameMap map, Player player) {
+        if (player.isCrouching()) {
+            brightessFactor = Math.max(1.0, brightessFactor - 0.1);
+        } else {
+            brightessFactor = Math.min(1.5, brightessFactor + 0.1);
+        }
+
         for (int x = 0; x < lineCount; x++) {
             double cameraX = 2.0 * x / lineCount - 1;
             double rayDirX =
@@ -129,7 +145,8 @@ public class Raycaster {
             line.setYPosition(drawStart + lineOffsetY);
             line.setHeight(drawEnd - drawStart);
 
-            double brightness = Math.min(1, 2 / perpWallDist);
+            double brightness =
+                Math.min(Math.exp(-perpWallDist / brightessFactor), 0.5);
             int red = (int)(brightness * 255);
             int green = (int)(brightness * 255);
             int blue = (int)(brightness * 255);

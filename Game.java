@@ -41,6 +41,8 @@ public class Game {
                                    raycaster, c);
         Enemy jack = new Enemy(arena, g, player, raycaster);
 
+        raycaster.setPlayer(player);
+
         boolean paused = false;
         boolean escHeld = false;
 

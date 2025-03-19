@@ -74,6 +74,10 @@ public class Player {
         rotation += r;
     }
 
+    public boolean isCrouching() {
+        return crouched;
+    }
+
     public void HandleMovement(GameArena arena) {
         double xChange = 0;
         double yChange = 0;

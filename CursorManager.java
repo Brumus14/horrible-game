@@ -63,10 +63,6 @@ public class CursorManager {
     public void resetRobot() {
         try {
             r = new Robot(frame.getGraphicsConfiguration().getDevice());
-            System.out.println(frame.getGraphicsConfiguration()
-                                   .getDevice()
-                                   .getDisplayMode()
-                                   .getWidth());
         } catch (AWTException e) {
             System.out.println("Error creating robot");
         }

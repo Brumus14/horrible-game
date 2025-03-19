@@ -8,18 +8,24 @@ public class Sprite {
     private double depth;
     private Player player;
     private Raycaster raycaster;
+    private int red;
+    private int green;
+    private int blue;
 
     public Sprite(GameArena a, Player p, double x, double y, double w, double h,
-                  String colour, Raycaster r) {
+                  int rgb, Raycaster r) {
         arena = a;
         player = p;
         positionX = x;
         positionY = y;
         width = w;
         height = h;
-        shape = new Rectangle(0, 0, 0, 0, colour);
+        shape = new Rectangle(0, 0, 0, 0, "black");
         arena.addRectangle(shape);
         raycaster = r;
+        red = (rgb >> 16) & 0xFF;
+        green = (rgb >> 8) & 0xFF;
+        blue = rgb & 0xFF;
     }
 
     public double getDepth() {
