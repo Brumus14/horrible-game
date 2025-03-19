@@ -1,14 +1,17 @@
 public class Node {
-    int[] locs;
+    int x;
+    int y;
     Node prevNode;
 
     public Node(int x, int y) {
-        locs = new int[]{x, y};
+        this.x = x;
+        this.y = y;
         prevNode = null;
     }
 
     public Node(int x, int y, Node prevNode) {
-        locs = new int[]{x, y};
+        this.x = x;
+        this.y = y;
         this.prevNode = prevNode;
     }
 }
