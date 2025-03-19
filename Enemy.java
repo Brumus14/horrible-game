@@ -105,7 +105,7 @@ public class Enemy {
                 while(!possibleMove){
                     int moveX = (int)(Math.random() * 2);
                     int movePos = (int)(Math.random() * 2);
-                    System.out.println(moveX + " " + movePos + " " + (targetLocation[1] + movePos));
+                    //System.out.println(moveX + " " + movePos + " " + (targetLocation[1] + movePos));
                     if(moveX == 1 && (targetLocation[0] + (movePos == 1 ? 1 : -1)) > 0 && (targetLocation[0] + (movePos == 1 ? 1 : -1)) < 24 && gen.area[(int)targetLocation[1]][(int)targetLocation[0] + (movePos == 1 ? 1 : -1)] == 0){
                         targetLocation[0] += movePos == 1 ? 1 : -1;
                         possibleMove = true;
@@ -133,7 +133,7 @@ public class Enemy {
             //System.out.println("Did a check noise: " + listLocations.size() + "PlayerPos: " +
                     //(int)player.getPositionX() + ", " + (int)player.getPositionY() + "EnemyPos: " + (int)xPos + ", " + (int)yPos);
         }
-        System.out.println("xPos: " + xPos + " yPos: " + yPos);
+        //System.out.println("xPos: " + xPos + " yPos: " + yPos);
         move();
         displaySprite.setPositionX(xPos);
         displaySprite.setPositionY(yPos);

@@ -10,11 +10,13 @@ public class Player {
     private double origSpeed;
     private double rotationSpeed;
     private double mouseRotateSpeed = 0.0005;
-    private int screenWidth;
+    private double centreX;
     public boolean makingNoise = false;
     private boolean crouched = false;
     private Generator gen;
-    private double hitboxSize = 0;
+    private double hitboxSize = 0.2;
+    private boolean mouseRotation = true;
+    private boolean mouseHeld;
 
     public Player(double posX, double posY, double plane, double sp, double rSp,
                   int screenWidth, Generator g) {
@@ -26,7 +28,7 @@ public class Player {
         speed = sp;
         origSpeed = sp;
         rotationSpeed = rSp;
-        this.screenWidth = screenWidth;
+        centreX = screenWidth / 2;
         gen = g;
     }
 
@@ -120,7 +122,9 @@ public class Player {
         }
 
         // rotation
-        rotate((int)(MouseInfo.getPointerInfo().getLocation().getX() - (screenWidth / 2)) * mouseRotateSpeed);
+        if(mouseRotation) {
+            rotate((int)(MouseInfo.getPointerInfo().getLocation().getX() - centreX) * mouseRotateSpeed);
+        }
 
         while (rotation < 0) {
             rotation += 2 * Math.PI;
@@ -138,6 +142,20 @@ public class Player {
         }
         else{
             makingNoise = false;
+        }
+
+        if(arena.letterPressed('m')) {
+            if(!mouseHeld){
+                mouseRotation = !mouseRotation;
+            }
+            mouseHeld= true;
+        }
+        else{
+            mouseHeld = false;
+        }
+
+        if(arena.letterPressed('r')) {
+            centreX = MouseInfo.getPointerInfo().getLocation().getX();
         }
     }
 }
