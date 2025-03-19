@@ -15,8 +15,11 @@ public class Enemy {
     private Sprite displaySprite;
     public boolean killPlayer = false;
     private int hearingDistance = 5;
+    private Rectangle heartbeat;
+    private double heartTimer = 1;
+    private boolean heartUp = true;
 
-    public Enemy(GameArena arena, Generator gen, Player player, Raycaster r) {
+    public Enemy(GameArena arena, Generator gen, Player player, Raycaster r, CursorManager c) {
         this.gen = gen;
         this.player = player;
         xPos = gen.startEnemyX;
@@ -26,6 +29,9 @@ public class Enemy {
         targetLocation = listLocations.getFirst();
         displaySprite = new Sprite(arena, player, xPos + 0.5, yPos + 1.5, 200,
                                    200, 0x800080, r);
+
+        heartbeat = new Rectangle(0, 0, c.getWidth(), c.getHeight(), "%ff000000");
+        arena.addRectangle(heartbeat);
     }
 
     private boolean checkNoise() {
@@ -300,5 +306,24 @@ public class Enemy {
         } else {
             hearingDistance = 1;
         }
+
+
+        heartTimer /= 1 + (1 / Math.max(1, ((Math.sqrt(Math.pow(player.getPositionX() - xPos, 2) +
+                Math.pow(player.getPositionY() - yPos, 2))))));
+
+        if(heartTimer < 0.01){
+            heartTimer = 1;
+        }
+
+//        System.out.println("ff0000" + Integer.toHexString((int)(((30 - Math.sqrt(Math.pow(positionX - (gen.endLocation[0] + 0.5), 2) +
+//                Math.pow(positionY - (gen.endLocation[1] + 0.5), 2))) / 100) * Integer.valueOf("000000ff", 16))));
+//        System.out.println((((30 - Math.sqrt(Math.pow(positionX - (gen.endLocation[0] + 0.5), 2) +
+//                Math.pow(positionY - (gen.endLocation[1] + 0.5), 2))) / 100)));
+        String suffix = Integer.toHexString((int)(Integer.valueOf("000000ff", 16) * heartTimer / 20));
+        if(suffix.length() == 1){
+            suffix = "0" + suffix;
+        }
+        heartbeat.setColour("%ff0000" + suffix);
+        System.out.println(heartTimer + " " + suffix);
     }
 }
