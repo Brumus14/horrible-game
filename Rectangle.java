@@ -15,6 +15,7 @@ public class Rectangle {
     private double height;    // The height of this Rectangle
     private int layer;        // The layer this Rectangle is on.
     private String colour;    // The colour of this Rectangle
+    private double depth;
 
     // Permissable colours are:
     // BLACK, BLUE, CYAN, DARKGREY, GREY,
@@ -65,6 +66,14 @@ public class Rectangle {
         this.height = h;
         this.colour = col;
         this.layer = layer;
+    }
+
+    public double getDepth() {
+        return depth;
+    }
+
+    public void setDepth(double d) {
+        depth = d;
     }
 
     /**

@@ -24,6 +24,31 @@ public class Sprite {
         return depth;
     }
 
+    public Rectangle getShape() {
+        return shape;
+    }
+
+    public double getPositionX() {
+        return positionX;
+    }
+
+    public void setPositionX(double posX) {
+        positionX = posX;
+    }
+
+    public double getPositionY() {
+        return positionY;
+    }
+
+    public void setPositionY(double posY) {
+        positionY = posY;
+    }
+
+    public void move(double x, double y) {
+        positionX += x;
+        positionY += y;
+    }
+
     public void Update() {
         double deltaX = player.getPositionX() - positionX;
         double deltaY = player.getPositionY() - positionY;
@@ -55,5 +80,6 @@ public class Sprite {
         shape.setYPosition(arena.getHeight() / 2);
 
         depth = distance;
+        shape.setDepth(distance);
     }
 }

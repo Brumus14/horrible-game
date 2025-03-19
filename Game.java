@@ -37,12 +37,17 @@ public class Game {
 
         Raycaster raycaster = new Raycaster(arena, 480);
 
-        Sprite enemy = new Sprite(arena, player, 7, 7, 200, 200, "blue");
+        Sprite enemy = new Sprite(arena, player, 12.5, 1.5, 200, 200, "blue");
 
         boolean paused = false;
         boolean escHeld = false;
 
+        // Renderer renderer =
+        //     new Renderer(arena, new Sprite[] {enemy}, raycaster.getLines(),
+        //                  raycaster.getLineDepths());
+
         while (!arena.letterPressed('p')) {
+            enemy.move(0.001, 0);
             if (arena.escPressed() && !escHeld) {
                 c.Update();
                 c.toggleCursor();

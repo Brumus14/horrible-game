@@ -8,6 +8,7 @@ public class Raycaster {
         this.arena = arena;
         this.lineCount = lineCount;
         lines = new Rectangle[lineCount];
+        lineDepths = new double[lineCount];
 
         double lineWidth = (double)arena.getWidth() / lineCount;
 
@@ -23,6 +24,14 @@ public class Raycaster {
 
     public double getLineDepth(int line) {
         return lineDepths[line];
+    }
+
+    public Rectangle[] getLines() {
+        return lines;
+    }
+
+    public double[] getLineDepths() {
+        return lineDepths;
     }
 
     // y is flipped
@@ -96,7 +105,10 @@ public class Raycaster {
                 perpWallDist = (sideDistY - deltaDistY);
             }
 
+            lineDepths[x] = perpWallDist;
+
             Rectangle line = lines[x];
+            line.setDepth(perpWallDist);
 
             int h = arena.getHeight();
 

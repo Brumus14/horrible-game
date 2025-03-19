@@ -222,20 +222,15 @@ public class GameArena extends JPanel
         if (!rendered) {
             this.setSize(arenaWidth, arenaHeight);
 
-            // Create a buffer the same size of the window, which we can reuse
-            // from frame to frame to improve performance.
             buffer = new BufferedImage(arenaWidth, arenaHeight,
                                        BufferedImage.TYPE_INT_ARGB);
             graphics = buffer.createGraphics();
             graphics.setRenderingHints(renderingHints);
 
-            // Remember that we've completed this initialisation, so that we
-            // don't do it again...
             rendered = true;
         }
 
         if (frame == null) {
-            // Find the JFrame we have been added to, and attach a KeyListner
             frame = (JFrame)SwingUtilities.getWindowAncestor(this);
 
             if (frame != null)
@@ -253,6 +248,18 @@ public class GameArena extends JPanel
                                        arenaHeight, 0, 0,
                                        backgroundImage.getWidth(null),
                                        backgroundImage.getHeight(null), null);
+
+                try {
+                    things.sort(Comparator
+                                    .comparingDouble(
+                                        (Object o)
+                                            -> (o instanceof Rectangle)
+                                                   ? ((Rectangle)o).getDepth()
+                                                   : 0)
+                                    .reversed());
+                } catch (ClassCastException | NullPointerException |
+                         IllegalArgumentException e) {
+                }
 
                 for (Object o : things) {
                     if (o instanceof Ball) {
@@ -364,34 +371,25 @@ public class GameArena extends JPanel
 
                 this.exit();
             } else {
-                // Try to insert this object into the list.
                 for (int i = 0; i < things.size(); i++) {
-                    int l = 0;
-                    Object obj = things.get(i);
+                    Object existing = things.get(i);
 
-                    if (obj instanceof Ball)
-                        l = ((Ball)obj).getLayer();
+                    if (existing instanceof Rectangle && o instanceof
+                                                             Rectangle) {
+                        Rectangle existingRect = (Rectangle)existing;
+                        Rectangle newRect = (Rectangle)o;
 
-                    if (obj instanceof Rectangle)
-                        l = ((Rectangle)obj).getLayer();
-
-                    if (obj instanceof Line)
-                        l = ((Line)obj).getLayer();
-
-                    if (obj instanceof Text)
-                        l = ((Text)obj).getLayer();
-
-                    if (layer < l) {
-                        things.add(i, o);
-                        added = true;
-                        break;
+                        if (newRect.getDepth() < existingRect.getDepth()) {
+                            things.add(i, o);
+                            added = true;
+                            break;
+                        }
                     }
                 }
 
-                // If there are no items in the list with an equivalent or
-                // higher layer, append this object to the end of the list.
-                if (!added)
+                if (!added) {
                     things.add(o);
+                }
             }
         }
     }
