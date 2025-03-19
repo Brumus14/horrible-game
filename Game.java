@@ -36,11 +36,11 @@ public class Game {
 
         Raycaster raycaster = new Raycaster(arena, 480);
 
-        Tutorial tutorial = new Tutorial(arena);
+        Tutorial tutorial = new Tutorial(arena, c);
 
         // plane of 10 for drunk
-        Player player = new Player(arena, 12.5, 1.5, 0.66, 0.02, 0.03, g,
-                                   raycaster, c);
+        Player player =
+            new Player(arena, 12.5, 1.5, 0.66, 0.02, 0.03, g, raycaster, c);
         Enemy jack = new Enemy(arena, g, player, raycaster);
 
         raycaster.setPlayer(player);
@@ -75,7 +75,7 @@ public class Game {
 
             arena.pause();
 
-            if (!paused) {
+            if (!paused && tutorial.isFinished()) {
                 player.HandleMovement(arena);
                 // enemy.Update();
                 raycaster.raycast(map, player);

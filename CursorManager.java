@@ -86,8 +86,8 @@ public class CursorManager {
 
     public double getHeight() {
         return frame.getGraphicsConfiguration()
-                .getDevice()
-                .getDisplayMode()
-                .getHeight();
+            .getDevice()
+            .getDisplayMode()
+            .getHeight();
     }
 }
