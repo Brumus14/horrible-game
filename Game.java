@@ -36,6 +36,8 @@ public class Game {
 
         Raycaster raycaster = new Raycaster(arena, 480);
 
+        Tutorial tutorial = new Tutorial(arena);
+
         // plane of 10 for drunk
         Player player = new Player(12.5, 1.5, 0.66, 0.02, 0.03, screenWidth, g,
                                    raycaster, c);
@@ -46,7 +48,19 @@ public class Game {
         boolean paused = false;
         boolean escHeld = false;
 
+        boolean previousTPressed = false;
+
         while (!(arena.letterPressed('p') || jack.killPlayer || player.win)) {
+            if (arena.letterPressed('t')) {
+                if (!previousTPressed) {
+                    tutorial.nextText();
+                }
+
+                previousTPressed = true;
+            } else {
+                previousTPressed = false;
+            }
+
             if (arena.escPressed() && !escHeld) {
                 c.Update();
                 c.toggleCursor();
