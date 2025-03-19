@@ -27,6 +27,7 @@ public class Player {
     private Rectangle breathBackground;
     private Rectangle breathRect;
     private boolean breathCooldown = false;
+    private Rectangle heartbeat;
 
     public Player(GameArena arena, double posX, double posY, double plane, double sp, double rSp,
                   Generator g, Raycaster r, CursorManager c) {
@@ -48,6 +49,9 @@ public class Player {
         breathRect = new Rectangle(c.getWidth() / 2 - 300, c.getHeight() - 40, (double)600, (double)20, "blue");
         arena.addRectangle(breathBackground);
         arena.addRectangle(breathRect);
+
+        heartbeat = new Rectangle(0, 0, c.getWidth(), c.getHeight(), "%ff000000");
+        arena.addRectangle(heartbeat);
     }
 
     public double getPositionX() {
@@ -245,5 +249,16 @@ public class Player {
         if(breath >= breathMax){
             breathCooldown = false;
         }
+
+//        System.out.println("ff0000" + Integer.toHexString((int)(((30 - Math.sqrt(Math.pow(positionX - (gen.endLocation[0] + 0.5), 2) +
+//                Math.pow(positionY - (gen.endLocation[1] + 0.5), 2))) / 100) * Integer.valueOf("000000ff", 16))));
+//        System.out.println((((30 - Math.sqrt(Math.pow(positionX - (gen.endLocation[0] + 0.5), 2) +
+//                Math.pow(positionY - (gen.endLocation[1] + 0.5), 2))) / 100)));
+        String suffix = Integer.toHexString((int)(((24 - Math.sqrt(Math.pow(positionX - (gen.endLocation[0] + 0.5), 2) +
+                Math.pow(positionY - (gen.endLocation[1] + 0.5), 2))) / 24) * Integer.valueOf("000000ff", 16)));
+        if(suffix.length() == 1){
+            suffix = "0" + suffix;
+        }
+        heartbeat.setColour("%ff0000" + suffix);
     }
 }

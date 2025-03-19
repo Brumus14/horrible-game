@@ -331,7 +331,16 @@ public class GameArena extends JPanel
     private Color getColourFromString(String col) {
         Color c = colours.get(col.toUpperCase());
 
-        if (c == null && col.startsWith("#")) {
+        if (c == null && col.startsWith("%")) {
+            int r = Integer.valueOf(col.substring(1, 3), 16);
+            int g = Integer.valueOf(col.substring(3, 5), 16);
+            int b = Integer.valueOf(col.substring(5, 7), 16);
+            int a = Integer.valueOf(col.substring(7, 9), 16);
+
+            c = new Color(r, g, b, a);
+            colours.put(col.toUpperCase(), c);
+        }
+        else if (c == null && col.startsWith("#")) {
             int r = Integer.valueOf(col.substring(1, 3), 16);
             int g = Integer.valueOf(col.substring(3, 5), 16);
             int b = Integer.valueOf(col.substring(5, 7), 16);
