@@ -87,6 +87,7 @@ public class Player {
 
         if (arena.ctrlPressed()) {
             crouched = true;
+            speed = origSpeed * 0.5;
 
             double offset = raycaster.getLineOffsetY();
 

@@ -44,7 +44,7 @@ public class Game {
         boolean paused = false;
         boolean escHeld = false;
 
-        while (!arena.letterPressed('p')) {
+        while (!(arena.letterPressed('p') || jack.killPlayer)) {
             if (arena.escPressed() && !escHeld) {
                 c.Update();
                 c.toggleCursor();

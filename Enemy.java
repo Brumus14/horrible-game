@@ -10,19 +10,22 @@ public class Enemy {
     private ArrayList<ArrayList<Integer>> visited;
     private double[] targetLocation;
     private double speed = 0.01;
-    int frameCounter = 0;
-    boolean noiseCooldown = true;
-    Sprite displaySprite;
+    private int frameCounter = 0;
+    private boolean noiseCooldown = true;
+    private Sprite displaySprite;
+    public boolean killPlayer = false;
+
 
     public Enemy(GameArena arena, Generator gen, Player player, Raycaster r) {
         this.gen = gen;
         this.player = player;
-        xPos = (int)(Math.random() * (gen.mapSize - 2)) + 1;
-        yPos = gen.mapSize - 2;
-        xPos = 12;
-        yPos = 1;
+        xPos = 0;
+        yPos = gen.mapSize / 2;
+        while(gen.area[(int)xPos][(int)yPos] != 0){
+            xPos = (int)(Math.random() * (gen.mapSize - 2)) + 1;
+        }
         listLocations = new ArrayList<>();
-        listLocations.add(new double[] {12.5, 1.5});
+        listLocations.add(new double[] {xPos + 0.5, yPos + 0.5});
         targetLocation = listLocations.getFirst();
         displaySprite = new Sprite(arena, player, xPos + 0.5, yPos + 1.5, 200,
                                    200, "purple", r);
@@ -35,7 +38,7 @@ public class Enemy {
             // targetLocation[0][0] = (int)player.getPositionX();
             // targetLocation[0][1] = (int)player.getPositionY();
             listLocations =
-                new ArrayList<>(Arrays.asList(listLocations.getFirst()));
+                new ArrayList<>();
             //visited = new ArrayList<>();
 
             search(20, (int)player.getPositionX(), (int)player.getPositionY());
@@ -172,7 +175,9 @@ public class Enemy {
                         speed;
             }
         } else {
-            listLocations.remove(0);
+            if (!listLocations.isEmpty()) {
+                listLocations.removeFirst();
+            }
             if (!listLocations.isEmpty()) {
                 targetLocation = new double[] {listLocations.getFirst()[0], listLocations.getFirst()[1]};
                 //for(double[] location : listLocations){
@@ -218,7 +223,7 @@ public class Enemy {
                     }
                     else{
                        //System.out.println(targetLocation[0] + " " + targetLocation[1]);
-                        listLocations.add(listLocations.size(), new double[] {targetLocation[0], targetLocation[1]});
+                        listLocations.add(new double[] {targetLocation[0], targetLocation[1]});
                         //for(double[] location : listLocations){
                             //System.out.println("x: " + location[0] + " y: " + location[1]);
                         //}
@@ -226,15 +231,29 @@ public class Enemy {
                     }
                 }
             }
-            targetLocation = new double[] {listLocations.getFirst()[0], listLocations.getFirst()[1]};
-            for(double[] location : listLocations){
-                //System.out.println(Arrays.toString(location));
+            if(!listLocations.isEmpty()){
+                targetLocation = new double[] {listLocations.getFirst()[0], listLocations.getFirst()[1]};
             }
+
+            //for(double[] location : listLocations){
+                //System.out.println(Arrays.toString(location));
+            //}
+        }
+    }
+
+    public void isPlayerCollide(){
+        if(Math.sqrt(Math.pow(player.getPositionX() - xPos, 2) +
+                Math.pow(player.getPositionY() - yPos, 2)) < 0.5){
+            killPlayer = true;
+        }
+        else{
+            killPlayer = false;
         }
     }
 
     public void Update() {
-        if (frameCounter == 120) {
+        isPlayerCollide();
+        if (frameCounter == 20) {
             if (checkNoise()) {
                 noiseCooldown = true;
                 frameCounter = 0;
