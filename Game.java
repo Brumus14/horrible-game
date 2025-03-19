@@ -79,6 +79,28 @@ public class Game {
             }
         }
 
+        if (player.win) {
+            arena.clearGameArena();
+
+            while (!arena.letterPressed('q')) {
+                arena.pause();
+
+                Text text = new Text("YOU WIN", 200, c.getWidth() / 2 - 60 * 7,
+                                     c.getHeight() / 2, "red");
+                arena.addText(text);
+
+                Text text1 = new Text("gg you are truly an epic gamer", 24,
+                                      c.getWidth() / 2 - 6 * 30,
+                                      c.getHeight() / 2 + 50, "red");
+                Text text2 =
+                    new Text("(press q to exit)", 24, c.getWidth() / 2 - 6 * 17,
+                             c.getHeight() / 2 + 75, "red");
+
+                arena.addText(text1);
+                arena.addText(text2);
+            }
+        }
+
         JFrame frame =
             (JFrame)SwingUtilities.getWindowAncestor(arena.getPanel());
         frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));

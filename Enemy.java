@@ -17,9 +17,9 @@ public class Enemy {
     private int hearingDistance = 5;
     private Rectangle heartbeat;
     private double heartTimer = 1;
-    private boolean heartUp = true;
 
-    public Enemy(GameArena arena, Generator gen, Player player, Raycaster r, CursorManager c) {
+    public Enemy(GameArena arena, Generator gen, Player player, Raycaster r,
+                 CursorManager c) {
         this.gen = gen;
         this.player = player;
         xPos = gen.startEnemyX;
@@ -30,7 +30,8 @@ public class Enemy {
         displaySprite = new Sprite(arena, player, xPos + 0.5, yPos + 1.5, 200,
                                    200, 0x800080, r);
 
-        heartbeat = new Rectangle(0, 0, c.getWidth(), c.getHeight(), "%ff000000");
+        heartbeat =
+            new Rectangle(0, 0, c.getWidth(), c.getHeight(), "%ff000000");
         arena.addRectangle(heartbeat);
     }
 
@@ -43,7 +44,7 @@ public class Enemy {
             listLocations = new ArrayList<>();
             // visited = new ArrayList<>();
 
-            search(30, (int)player.getPositionX(), (int)player.getPositionY());
+            search(20, (int)player.getPositionX(), (int)player.getPositionY());
             return true;
         }
         return false;
@@ -104,7 +105,7 @@ public class Enemy {
         Node curNode = getPathNode(depth, x, y);
         if (curNode != null) {
             listLocations = new ArrayList<>();
-            speed = 0.04;
+            speed = 0.03;
             curNode = curNode.prevNode;
             while (curNode != null) {
                 listLocations.add(
@@ -302,25 +303,33 @@ public class Enemy {
         } else if (player.sprinting && player.moving) {
             hearingDistance = 10;
         } else if (player.moving) {
-            hearingDistance = 5;
+            hearingDistance = 7;
         } else {
             hearingDistance = 1;
         }
 
+        heartTimer /=
+            1 +
+            (1 / Math.max(1, ((Math.sqrt(
+                                 Math.pow(player.getPositionX() - xPos, 2) +
+                                 Math.pow(player.getPositionY() - yPos, 2))))));
 
-        heartTimer /= 1 + (1 / Math.max(1, ((Math.sqrt(Math.pow(player.getPositionX() - xPos, 2) +
-                Math.pow(player.getPositionY() - yPos, 2))))));
-
-        if(heartTimer < 0.01){
+        if (heartTimer < 0.01) {
             heartTimer = 1;
         }
 
-//        System.out.println("ff0000" + Integer.toHexString((int)(((30 - Math.sqrt(Math.pow(positionX - (gen.endLocation[0] + 0.5), 2) +
-//                Math.pow(positionY - (gen.endLocation[1] + 0.5), 2))) / 100) * Integer.valueOf("000000ff", 16))));
-//        System.out.println((((30 - Math.sqrt(Math.pow(positionX - (gen.endLocation[0] + 0.5), 2) +
-//                Math.pow(positionY - (gen.endLocation[1] + 0.5), 2))) / 100)));
-        String suffix = Integer.toHexString((int)(Integer.valueOf("000000ff", 16) * heartTimer / 20));
-        if(suffix.length() == 1){
+        //        System.out.println("ff0000" + Integer.toHexString((int)(((30 -
+        //        Math.sqrt(Math.pow(positionX - (gen.endLocation[0] + 0.5), 2)
+        //        +
+        //                Math.pow(positionY - (gen.endLocation[1] + 0.5), 2)))
+        //                / 100) * Integer.valueOf("000000ff", 16))));
+        //        System.out.println((((30 - Math.sqrt(Math.pow(positionX -
+        //        (gen.endLocation[0] + 0.5), 2) +
+        //                Math.pow(positionY - (gen.endLocation[1] + 0.5), 2)))
+        //                / 100)));
+        String suffix = Integer.toHexString(
+            (int)(Integer.valueOf("000000ff", 16) * heartTimer / 20));
+        if (suffix.length() == 1) {
             suffix = "0" + suffix;
         }
         heartbeat.setColour("%ff0000" + suffix);

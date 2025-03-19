@@ -21,7 +21,7 @@ public class Player {
     private boolean mouseHeld;
     private Raycaster raycaster;
     private CursorManager cursor;
-    public boolean win;
+    public boolean win = false;
     private double breath;
     private double breathMax = 100;
     private Rectangle breathBackground;
