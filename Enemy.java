@@ -26,7 +26,7 @@ public class Enemy {
         yPos = gen.mapSize / 2;
         listLocations = new ArrayList<>();
         listLocations.add(new double[] {xPos + 0.5, yPos + 0.5});
-        targetLocation = listLocations.getFirst();
+        targetLocation = listLocations.get(0);
         displaySprite = new Sprite(arena, player, xPos + 0.5, yPos + 1.5, 200,
                                    200, 0x800080, r);
 
@@ -190,8 +190,8 @@ public class Enemy {
                 listLocations.removeFirst();
             }
             if (!listLocations.isEmpty()) {
-                targetLocation = new double[] {listLocations.getFirst()[0],
-                                               listLocations.getFirst()[1]};
+                targetLocation = new double[] {listLocations.get(0)[0],
+                                               listLocations.get(0)[1]};
                 // for(double[] location : listLocations){
                 // System.out.println("x: " + location[0] + " y: " +
                 // location[1]);
@@ -253,8 +253,8 @@ public class Enemy {
                 }
             }
             if (!listLocations.isEmpty()) {
-                targetLocation = new double[] {listLocations.getFirst()[0],
-                                               listLocations.getFirst()[1]};
+                targetLocation = new double[] {listLocations.get(0)[0],
+                                               listLocations.get(0)[1]};
             }
 
             // for(double[] location : listLocations){
@@ -333,6 +333,6 @@ public class Enemy {
             suffix = "0" + suffix;
         }
         heartbeat.setColour("%ff0000" + suffix);
-        //System.out.println(heartTimer + " " + suffix);
+        // System.out.println(heartTimer + " " + suffix);
     }
 }
